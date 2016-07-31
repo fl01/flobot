@@ -22,7 +22,7 @@ namespace Flobot.Messages
         {
             if (!string.IsNullOrEmpty(rawText) && rawText.StartsWith(BotName))
             {
-                return rawText.Substring(BotName.Length);
+                return rawText.Substring(BotName.Length).Trim();
             }
 
             return rawText;
