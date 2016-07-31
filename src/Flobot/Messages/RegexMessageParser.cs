@@ -6,18 +6,18 @@ using System.Web;
 
 namespace Flobot.Messages
 {
-    public class RegexMessageParser : MessageParserBase
+    public class RegexMessageParser : IMessageParser
     {
         private const string CommandPrefix = "!";
         private const string SubCommandDelimeter = ".";
 
         private readonly string commandPattern = $"^{CommandPrefix}([a-zA-Z0-9]+)([{SubCommandDelimeter}]([a-zA-Z0-9]+))?"; // represents !command.subcommand
 
-        protected override Message InternalParse(string text)
+        public Message Parse(string text)
         {
-            Message message = new Message(text);
+            Message message = new Message(text.Trim());
 
-            var commandParseResult = ParseCommand(text);
+            var commandParseResult = ParseCommand(message.RawText);
 
             message.Command = commandParseResult.Command;
             message.CommandArg = commandParseResult.CommandArg;

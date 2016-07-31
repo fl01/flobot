@@ -45,7 +45,7 @@ namespace Flobot
                         break;
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 // TODO: log error
                 reply = null;
@@ -63,11 +63,11 @@ namespace Flobot
 
         private Activity HandleMessageActivity(Activity activity)
         {
+            activity.RemoveRecipientMention();
             User user = userManager.RecognizeUser(activity.From);
             Message message = messageParser.Parse(activity.Text);
             IMessageHandlerProvider handlerProvider = new MessageHandlerProvider(user);
             IMessageHandler handler = handlerProvider.GetHandler(message);
-
             Activity reply;
 
             if (handler == null)

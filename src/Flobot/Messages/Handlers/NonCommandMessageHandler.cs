@@ -11,7 +11,6 @@ namespace Flobot.Messages.Handlers
         public NonCommandMessageHandler(Message message)
             : base(message)
         {
-
         }
 
         protected override string GetReplyMessage(Activity activity)

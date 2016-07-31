@@ -17,7 +17,16 @@ namespace Flobot.Messages.Handlers
 
         public Activity CreateReply(Activity activity)
         {
-            string replyMessage = GetReplyMessage(activity);
+            string replyMessage;
+
+            try
+            {
+                replyMessage = GetReplyMessage(activity);
+            }
+            catch(Exception e)
+            {
+                replyMessage = "Internal error. " + e.Message;
+            }
 
             return activity.CreateReply(replyMessage);
         }

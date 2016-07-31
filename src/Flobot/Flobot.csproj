@@ -141,7 +141,6 @@
     <Compile Include="Messages\Handlers\TypeLoaderExtensions.cs" />
     <Compile Include="Messages\IMessageParser.cs" />
     <Compile Include="Messages\Message.cs" />
-    <Compile Include="Messages\MessageParserBase.cs" />
     <Compile Include="Messages\RegexMessageParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
