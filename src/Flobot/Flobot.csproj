@@ -123,6 +123,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Identity\IUserManager.cs" />
+    <Compile Include="Identity\IUserStore.cs" />
+    <Compile Include="Identity\PermissionsAttribute.cs" />
+    <Compile Include="Identity\Role.cs" />
+    <Compile Include="Identity\User.cs" />
+    <Compile Include="Identity\UserManager.cs" />
+    <Compile Include="Identity\UserStore.cs" />
+    <Compile Include="MessageHandlers\IMessageHandler.cs" />
+    <Compile Include="MessageHandlers\IMessageHandlerProvider.cs" />
+    <Compile Include="MessageHandlers\MessageHandlerProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

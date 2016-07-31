@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Flobot.Identity;
 using Microsoft.Bot.Connector;
 using Newtonsoft.Json;
 
@@ -13,6 +14,13 @@ namespace Flobot
     [BotAuthentication]
     public class MessagesController : ApiController
     {
+        private IUserManager userManager;
+
+        public MessagesController()
+        {
+            userManager = new UserManager(new UserStore());
+        }
+
         /// <summary>
         /// POST: api/Messages
         /// Receive a message from a user and reply to it
@@ -21,12 +29,11 @@ namespace Flobot
         {
             if (activity.Type == ActivityTypes.Message)
             {
-                ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-                // calculate something for us to return
-                int length = (activity.Text ?? string.Empty).Length;
+                var user = userManager.RecognizeUser(activity.From);
 
-                // return our reply to the user
-                Activity reply = activity.CreateReply($"You sent {activity.Text} which was {length} characters");
+                ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+
+                Activity reply = activity.CreateReply($"ID:{activity.From.Id}. Name:{activity.From.Name}. Role:{user.Role}");
                 await connector.Conversations.ReplyToActivityAsync(reply);
             }
             else
