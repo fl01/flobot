@@ -12,7 +12,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Flobot</RootNamespace>
-    <AssemblyName>Bot Application1</AssemblyName>
+    <AssemblyName>Flobot</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort>44362</IISExpressSSLPort>
