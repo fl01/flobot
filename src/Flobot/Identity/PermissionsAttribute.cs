@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Flobot.Identity
 {
-    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
     public sealed class PermissionsAttribute : Attribute
     {
         public Role Role { get; private set; }

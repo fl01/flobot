@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Flobot.Identity;
+using Flobot.Messages;
+using Flobot.Messages.Handlers;
 using Microsoft.Bot.Connector;
 using Newtonsoft.Json;
 
@@ -15,10 +17,12 @@ namespace Flobot
     public class MessagesController : ApiController
     {
         private IUserManager userManager;
+        private IMessageParser messageParser;
 
         public MessagesController()
         {
             userManager = new UserManager(new UserStore());
+            messageParser = new RegexMessageParser();
         }
 
         /// <summary>
@@ -27,50 +31,62 @@ namespace Flobot
         /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
-            if (activity.Type == ActivityTypes.Message)
+            Activity reply;
+
+            try
             {
-                var user = userManager.RecognizeUser(activity.From);
+                switch (activity.Type)
+                {
+                    case ActivityTypes.Message:
+                        reply = HandleMessageActivity(activity);
+                        break;
+                    default:
+                        reply = null;
+                        break;
+                }
+            }
+            catch(Exception)
+            {
+                // TODO: log error
+                reply = null;
+            }
 
+            if (reply != null)
+            {
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-
-                Activity reply = activity.CreateReply($"ID:{activity.From.Id}. Name:{activity.From.Name}. Role:{user.Role}");
                 await connector.Conversations.ReplyToActivityAsync(reply);
             }
-            else
-            {
-                HandleSystemMessage(activity);
-            }
+
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
         }
 
-        private Activity HandleSystemMessage(Activity message)
+        private Activity HandleMessageActivity(Activity activity)
         {
-            if (message.Type == ActivityTypes.DeleteUserData)
+            User user = userManager.RecognizeUser(activity.From);
+            Message message = messageParser.Parse(activity.Text);
+            IMessageHandlerProvider handlerProvider = new MessageHandlerProvider(user);
+            IMessageHandler handler = handlerProvider.GetHandler(message);
+
+            Activity reply;
+
+            if (handler == null)
             {
-                // Implement user deletion here
-                // If we handle user deletion, return a real message
+                if (message.IsCommand)
+                {
+                    reply = activity.CreateReply("Unknown command. Please type !help to see your list of supported commands.");
+                }
+                else // should never occur
+                {
+                    reply = activity.CreateReply($"Internal error occurred. Please try again later.");
+                }
             }
-            else if (message.Type == ActivityTypes.ConversationUpdate)
+            else
             {
-                // Handle conversation state changes, like members being added and removed
-                // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
-                // Not available in all channels
-            }
-            else if (message.Type == ActivityTypes.ContactRelationUpdate)
-            {
-                // Handle add/remove from contact lists
-                // Activity.From + Activity.Action represent what happened
-            }
-            else if (message.Type == ActivityTypes.Typing)
-            {
-                // Handle knowing tha the user is typing
-            }
-            else if (message.Type == ActivityTypes.Ping)
-            {
+                reply = handler.CreateReply(activity);
             }
 
-            return null;
+            return reply;
         }
     }
 }

@@ -130,9 +130,19 @@
     <Compile Include="Identity\User.cs" />
     <Compile Include="Identity\UserManager.cs" />
     <Compile Include="Identity\UserStore.cs" />
-    <Compile Include="MessageHandlers\IMessageHandler.cs" />
-    <Compile Include="MessageHandlers\IMessageHandlerProvider.cs" />
-    <Compile Include="MessageHandlers\MessageHandlerProvider.cs" />
+    <Compile Include="Messages\CommandParseResult.cs" />
+    <Compile Include="Messages\Handlers\AdviceHandler.cs" />
+    <Compile Include="Messages\Handlers\IMessageHandler.cs" />
+    <Compile Include="Messages\Handlers\IMessageHandlerProvider.cs" />
+    <Compile Include="Messages\Handlers\MessageAttribute.cs" />
+    <Compile Include="Messages\Handlers\MessageHandlerBase.cs" />
+    <Compile Include="Messages\Handlers\MessageHandlerProvider.cs" />
+    <Compile Include="Messages\Handlers\NonCommandMessageHandler.cs" />
+    <Compile Include="Messages\Handlers\TypeLoaderExtensions.cs" />
+    <Compile Include="Messages\IMessageParser.cs" />
+    <Compile Include="Messages\Message.cs" />
+    <Compile Include="Messages\MessageParserBase.cs" />
+    <Compile Include="Messages\RegexMessageParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

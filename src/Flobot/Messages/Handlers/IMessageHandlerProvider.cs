@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Flobot.Identity;
 
-namespace Flobot.MessageHandlers
+namespace Flobot.Messages.Handlers
 {
     public interface IMessageHandlerProvider
     {
-        IMessageHandler GetProvider(bool checkPermissions = true);
+        IMessageHandler GetHandler(Message message);
     }
 }
