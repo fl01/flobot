@@ -131,9 +131,12 @@
     <Compile Include="Identity\UserManager.cs" />
     <Compile Include="Identity\UserStore.cs" />
     <Compile Include="Messages\CommandParseResult.cs" />
+    <Compile Include="Messages\Handlers\DongerHandler.cs" />
     <Compile Include="Messages\Handlers\AdviceHandler.cs" />
     <Compile Include="Messages\Handlers\Advice\AdviceProvider.cs" />
     <Compile Include="Messages\Handlers\Advice\AdviceResponse.cs" />
+    <Compile Include="Messages\Handlers\Donger\DongerFace.cs" />
+    <Compile Include="Messages\Handlers\Donger\DongerStore.cs" />
     <Compile Include="Messages\Handlers\HelpHandler.cs" />
     <Compile Include="Messages\Handlers\IMessageHandler.cs" />
     <Compile Include="Messages\IMessageHandlerProvider.cs" />
