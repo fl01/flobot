@@ -137,6 +137,12 @@
     <Compile Include="Messages\Handlers\Advice\AdviceResponse.cs" />
     <Compile Include="Messages\Handlers\Donger\DongerFace.cs" />
     <Compile Include="Messages\Handlers\Donger\DongerStore.cs" />
+    <Compile Include="Messages\Handlers\FuckHandler.cs" />
+    <Compile Include="Messages\Handlers\Fuck\FoaasProxy.cs" />
+    <Compile Include="Messages\Handlers\Fuck\FoaasResponse.cs" />
+    <Compile Include="Messages\Handlers\Fuck\SimpleJsonClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Messages\Handlers\HelpHandler.cs" />
     <Compile Include="Messages\Handlers\IMessageHandler.cs" />
     <Compile Include="Messages\IMessageHandlerProvider.cs" />
