@@ -134,6 +134,7 @@
     <Compile Include="Messages\Handlers\AdviceHandler.cs" />
     <Compile Include="Messages\Handlers\Advice\AdviceProvider.cs" />
     <Compile Include="Messages\Handlers\Advice\AdviceResponse.cs" />
+    <Compile Include="Messages\Handlers\HelpHandler.cs" />
     <Compile Include="Messages\Handlers\IMessageHandler.cs" />
     <Compile Include="Messages\IMessageHandlerProvider.cs" />
     <Compile Include="Messages\MessageAttribute.cs" />

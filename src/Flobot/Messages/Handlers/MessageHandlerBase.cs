@@ -9,6 +9,8 @@ namespace Flobot.Messages.Handlers
 {
     public abstract class MessageHandlerBase : IMessageHandler
     {
+        protected const string SkypeNewLine = "\n\n";
+
         protected Message Message { get; private set; }
 
         protected User Caller { get; private set; }

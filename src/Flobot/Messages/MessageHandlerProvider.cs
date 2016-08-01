@@ -32,10 +32,7 @@ namespace Flobot.Messages
             try
             {
                 // let's search for a handler for the requested command
-                IEnumerable<Type> allMessageHandlers = GetMessageHandlers();
-
-                IEnumerable<Type> permittedHandlers = allMessageHandlers
-                    .Where(h => h.GetCustomAttribute<PermissionsAttribute>()?.Role <= caller.Role);
+                IEnumerable<Type> permittedHandlers = GetPermittedMessageHandlers();
 
                 Type matchedHandlerType = GetFirstMatchedHandler(permittedHandlers, message);
 
@@ -44,7 +41,7 @@ namespace Flobot.Messages
                     return null;
                 }
 
-                return Activator.CreateInstance(matchedHandlerType, message) as IMessageHandler;
+                return Activator.CreateInstance(matchedHandlerType, caller, message) as IMessageHandler;
             }
             catch (Exception)
             {
@@ -71,13 +68,11 @@ namespace Flobot.Messages
             return null;
         }
 
-        private IEnumerable<Type> GetMessageHandlers()
+        private IEnumerable<Type> GetPermittedMessageHandlers()
         {
-            Type messageHandler = typeof(IMessageHandler);
             return Assembly
                 .GetExecutingAssembly()
-                .GetLoadableTypes()
-                .Where(messageHandler.IsAssignableFrom);
+                .GetPermittedTypes<IMessageHandler>(caller);
         }
     }
 }
