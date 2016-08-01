@@ -4,8 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using Flobot.Identity;
+using Flobot.Messages.Handlers;
 
-namespace Flobot.Messages.Handlers
+namespace Flobot.Messages
 {
     public class MessageHandlerProvider : IMessageHandlerProvider
     {

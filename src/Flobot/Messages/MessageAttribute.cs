@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Flobot.Messages.Handlers
+namespace Flobot.Messages
 {
-    [System.AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
     sealed class MessageAttribute : Attribute
     {
         public IEnumerable<string> SupportedCommands { get; private set; }

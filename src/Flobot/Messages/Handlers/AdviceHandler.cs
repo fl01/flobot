@@ -5,8 +5,8 @@ using System.Net;
 using System.Text;
 using System.Web;
 using Flobot.Identity;
+using Flobot.Messages.Handlers.Advice;
 using Microsoft.Bot.Connector;
-using Newtonsoft.Json;
 
 namespace Flobot.Messages.Handlers
 {
@@ -14,48 +14,17 @@ namespace Flobot.Messages.Handlers
     [Message("advice", "adv")]
     public class AdviceHandler : MessageHandlerBase
     {
-        private EasyAdviceProvider adviceProvider;
+        private AdviceProvider adviceProvider;
 
         public AdviceHandler(Message message)
             : base(message)
         {
-            adviceProvider = new EasyAdviceProvider();
+            adviceProvider = new AdviceProvider();
         }
 
         protected override string GetReplyMessage(Activity activity)
         {
             return adviceProvider.GetAdvice();
-        }
-
-        private class EasyAdviceProvider
-        {
-            public string GetAdvice()
-            {
-                try
-                {
-                    using (WebClient wc = new WebClient())
-                    {
-                        var rawHtml = wc.DownloadString("http://fucking-great-advice.ru/api/random");
-                        AdviceResponse result = JsonConvert.DeserializeObject<AdviceResponse>(rawHtml);
-
-                        if (result != null && !string.IsNullOrEmpty(result.Text))
-                        {
-                            return result.Text.Replace("&nbsp;", " ");
-                        }
-
-                    }
-                }
-                catch (Exception)
-                {
-                }
-
-                return "Something bad just happened! No advices for you today.";
-            }
-
-            private class AdviceResponse
-            {
-                public string Text { get; set; }
-            }
         }
     }
 }

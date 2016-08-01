@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 
-namespace Flobot.Messages.Handlers
+namespace Flobot.Messages
 {
     public static class TypeLoaderExtensions
     {
