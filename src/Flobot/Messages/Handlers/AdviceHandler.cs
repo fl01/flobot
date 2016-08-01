@@ -16,8 +16,8 @@ namespace Flobot.Messages.Handlers
     {
         private AdviceProvider adviceProvider;
 
-        public AdviceHandler(Message message)
-            : base(message)
+        public AdviceHandler(User caller, Message message)
+            : base(caller, message)
         {
             adviceProvider = new AdviceProvider();
         }

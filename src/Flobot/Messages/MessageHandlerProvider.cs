@@ -26,7 +26,7 @@ namespace Flobot.Messages
 
             if (!message.IsCommand)
             {
-                return GetDefaultMessageHandler(message);
+                return new NonCommandMessageHandler(caller, message);
             }
 
             try
@@ -69,11 +69,6 @@ namespace Flobot.Messages
             }
 
             return null;
-        }
-
-        private IMessageHandler GetDefaultMessageHandler(Message message)
-        {
-            return new NonCommandMessageHandler(message);
         }
 
         private IEnumerable<Type> GetMessageHandlers()

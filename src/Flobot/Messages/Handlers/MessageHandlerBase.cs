@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Flobot.Identity;
 using Microsoft.Bot.Connector;
 
 namespace Flobot.Messages.Handlers
@@ -10,9 +11,12 @@ namespace Flobot.Messages.Handlers
     {
         protected Message Message { get; private set; }
 
-        public MessageHandlerBase(Message message)
+        protected User Caller { get; private set; }
+
+        public MessageHandlerBase(User caller, Message message)
         {
             Message = message;
+            Caller = caller;
         }
 
         public Activity CreateReply(Activity activity)
