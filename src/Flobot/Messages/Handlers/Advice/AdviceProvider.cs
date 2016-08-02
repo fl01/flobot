@@ -18,7 +18,7 @@ namespace Flobot.Messages.Handlers.Advice
                 {
                     AdviceResponse result = jsonClient.GetJsonObject<AdviceResponse>("http://fucking-great-advice.ru/api/random");
 
-                    return result.Text.Replace("&nbsp;", " ").Replace("&#151;", " - ");
+                    return result.Text.Replace("&nbsp;", " ").Replace("&#151;", "-");
                 }
             }
             catch (Exception)
