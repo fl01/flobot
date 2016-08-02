@@ -30,7 +30,7 @@ namespace Flobot.Messages
         {
             try
             {
-                Match commandMatch = Regex.Match(text, commandPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                Match commandMatch = Regex.Match(text, commandPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase, TimeSpan.FromSeconds(30));
 
                 if (!commandMatch.Success)
                 {
