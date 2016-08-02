@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
+using Newtonsoft.Json;
 
-namespace Flobot.Messages.Handlers.Fuck
+namespace Flobot.Common
 {
     public class SimpleJsonClient : WebClient
     {
@@ -17,6 +18,19 @@ namespace Flobot.Messages.Handlers.Fuck
             httpRequest.Accept = JsonContent;
             request.ContentType = JsonContent;
             return request;
+        }
+
+        public T GetJsonObject<T>(string address)
+        {
+            return GetJsonObject<T>(new Uri(address));
+        }
+
+        public T GetJsonObject<T>(Uri url)
+        {
+            var rawJson = DownloadString(url);
+            T jsonObject = JsonConvert.DeserializeObject<T>(rawJson);
+
+            return jsonObject;
         }
     }
 }
