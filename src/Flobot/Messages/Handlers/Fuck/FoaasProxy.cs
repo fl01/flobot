@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
-using Flobot.Common;
 using Newtonsoft.Json;
 
 namespace Flobot.Messages.Handlers.Fuck
@@ -96,8 +95,9 @@ namespace Flobot.Messages.Handlers.Fuck
             {
                 using (SimpleJsonClient wc = new SimpleJsonClient())
                 {
-                    FoaasResponse response = wc.GetJsonObject<FoaasResponse>(url);
-                    return response?.ToString();
+                    string jsonResponse = wc.DownloadString(url);
+                    FoaasResponse response = JsonConvert.DeserializeObject<FoaasResponse>(jsonResponse);
+                    return string.Join(" ", response.Message, response.Subtitle);
                 }
             }
             catch (Exception)

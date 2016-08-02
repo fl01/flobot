@@ -10,11 +10,5 @@ namespace Flobot.Messages.Handlers.Fuck
         public string Message { get; set; }
 
         public string Subtitle { get; set; }
-
-
-        public override string ToString()
-        {
-            return string.Join(" ", Message, Subtitle);
-        }
     }
 }
