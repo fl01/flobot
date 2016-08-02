@@ -38,6 +38,8 @@ namespace Flobot.Messages.Handlers
             {
                 case "top":
                     return GetPopularDongers();
+                case "all":
+                    return GetAllDongers();
                 default:
                     return GetRandomDonger();
 
@@ -54,6 +56,11 @@ namespace Flobot.Messages.Handlers
         private string GetPopularDongers()
         {
             return string.Join(SkypeNewLine, Store.GetAllDongers().Where(d => d.IsPopular).Select(d => d.Text));
+        }
+
+        private string GetAllDongers()
+        {
+            return string.Join(SkypeNewLine, Store.GetAllDongers().Select(d => d.Text));
         }
     }
 }
