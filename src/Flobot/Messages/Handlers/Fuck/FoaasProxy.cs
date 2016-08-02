@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
+using Flobot.Common;
 using Newtonsoft.Json;
 
 namespace Flobot.Messages.Handlers.Fuck
@@ -77,7 +78,9 @@ namespace Flobot.Messages.Handlers.Fuck
 
             string formattedLink = string.Format(link, from);
             Uri url = new Uri(formattedLink);
-            return GetFoaasReply(url);
+            FoaasResponse reply = GetFoaasReply(url);
+
+            return reply.ToString();
         }
 
         public string GetRandomFromToNameReply(string name, string from)
@@ -86,24 +89,25 @@ namespace Flobot.Messages.Handlers.Fuck
 
             string formattedLink = string.Format(link, name, from);
             Uri url = new Uri(formattedLink);
-            return GetFoaasReply(url);
+            FoaasResponse reply = GetFoaasReply(url);
+
+            return reply.Message;
         }
 
-        private string GetFoaasReply(Uri url)
+        private FoaasResponse GetFoaasReply(Uri url)
         {
             try
             {
                 using (SimpleJsonClient wc = new SimpleJsonClient())
                 {
-                    string jsonResponse = wc.DownloadString(url);
-                    FoaasResponse response = JsonConvert.DeserializeObject<FoaasResponse>(jsonResponse);
-                    return string.Join(" ", response.Message, response.Subtitle);
+                    FoaasResponse response = wc.GetJsonObject<FoaasResponse>(url);
+                    return response;
                 }
             }
             catch (Exception)
             {
                 // TODO : log
-                return "Something went wrong! Try again later.";
+                return new FoaasResponse() { Message = "Something went wrong! Try again later." };
             }
         }
     }
