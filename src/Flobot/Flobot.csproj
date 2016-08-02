@@ -131,6 +131,12 @@
     <Compile Include="Identity\UserManager.cs" />
     <Compile Include="Identity\UserStore.cs" />
     <Compile Include="Messages\CommandParseResult.cs" />
+    <Compile Include="Messages\Handlers\CurrencyHandler.cs" />
+    <Compile Include="Messages\Handlers\Currency\CurrencyContainer.cs" />
+    <Compile Include="Messages\Handlers\Currency\CurrencyData.cs" />
+    <Compile Include="Messages\Handlers\Currency\CurrencyValue.cs" />
+    <Compile Include="Messages\Handlers\Currency\ICurrencyProxy.cs" />
+    <Compile Include="Messages\Handlers\Currency\OpenratesProxy.cs" />
     <Compile Include="Messages\Handlers\DongerHandler.cs" />
     <Compile Include="Messages\Handlers\AdviceHandler.cs" />
     <Compile Include="Messages\Handlers\Advice\AdviceProvider.cs" />
@@ -166,6 +172,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
