@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Web;
+using Flobot.Common;
 using Flobot.Identity;
 using Microsoft.Bot.Connector;
 
@@ -22,10 +23,9 @@ namespace Flobot.Messages.Handlers
         {
             var permittedHandlers = GetPermittedHandlers();
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);
 
-            sb.Append($"{Caller.Name}({Caller.Role}), list of your commands is:");
-            sb.Append(SkypeNewLine);
+            sb.AppendLine($"{Caller.Name}({Caller.Role}), list of your commands is:");
 
             foreach (var handler in permittedHandlers)
             {
@@ -37,8 +37,7 @@ namespace Flobot.Messages.Handlers
                 }
                 // TODO : command prefix "!" should be taken from settings service
                 string formattedCommands = string.Join(", ", supportedCommands.Select(x => "!" + x));
-                sb.Append(formattedCommands);
-                sb.Append(SkypeNewLine);
+                sb.AppendLine(formattedCommands);
             }
 
             return sb.ToString();

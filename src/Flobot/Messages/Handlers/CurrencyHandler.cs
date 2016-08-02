@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
+using Flobot.Common;
 using Flobot.Identity;
 using Flobot.Messages.Handlers.Currency;
 using Microsoft.Bot.Connector;
@@ -13,8 +14,8 @@ namespace Flobot.Messages.Handlers
     [Message("currency", "curr")]
     public class CurrencyHandler : MessageHandlerBase
     {
-        private const string CurrencyNbuBuySellLineFormat = "NBU : {0}" + SkypeNewLine;
-        private const string CurrencyInterbankBuySellLineFormat = "Interbank : sell {0} ({2}), buy {1} ({3})" + SkypeNewLine;
+        private const string CurrencyNbuBuySellLineFormat = "NBU : {0}";
+        private const string CurrencyInterbankBuySellLineFormat = "Interbank : sell {0} ({2}), buy {1} ({3})";
 
         private ICurrencyProxy proxy;
 
@@ -53,19 +54,19 @@ namespace Flobot.Messages.Handlers
             string rubInterbankSellDiff = GetCurrencyDiff(previosDayInfo.RUB.Interbank.Sell, currencyInfo.RUB.Interbank.Sell);
             string rubInterbankBuyDiff = GetCurrencyDiff(previosDayInfo.RUB.Interbank.Buy, currencyInfo.RUB.Interbank.Buy);
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);
 
-            sb.Append("--USD--" + SkypeNewLine);
-            sb.AppendFormat(CurrencyNbuBuySellLineFormat, currencyInfo.USD.Nbu.Buy);
-            sb.AppendFormat(CurrencyInterbankBuySellLineFormat, currencyInfo.USD.Interbank.Sell, currencyInfo.USD.Interbank.Buy, usdInterbankSellDiff, usdInterbankBuyDiff);
+            sb.AppendLine("--USD--");
+            sb.AppendFormatLine(CurrencyNbuBuySellLineFormat, currencyInfo.USD.Nbu.Buy);
+            sb.AppendFormatLine(CurrencyInterbankBuySellLineFormat, currencyInfo.USD.Interbank.Sell, currencyInfo.USD.Interbank.Buy, usdInterbankSellDiff, usdInterbankBuyDiff);
 
-            sb.Append("--EUR--" + SkypeNewLine);
-            sb.AppendFormat(CurrencyNbuBuySellLineFormat, currencyInfo.EUR.Nbu.Buy);
-            sb.AppendFormat(CurrencyInterbankBuySellLineFormat, currencyInfo.EUR.Interbank.Sell, currencyInfo.EUR.Interbank.Buy, eurInterbankSellDiff, eurInterbankBuyDiff);
+            sb.AppendLine("--EUR--");
+            sb.AppendFormatLine(CurrencyNbuBuySellLineFormat, currencyInfo.EUR.Nbu.Buy);
+            sb.AppendFormatLine(CurrencyInterbankBuySellLineFormat, currencyInfo.EUR.Interbank.Sell, currencyInfo.EUR.Interbank.Buy, eurInterbankSellDiff, eurInterbankBuyDiff);
 
-            sb.Append("--RUB--" + SkypeNewLine);
-            sb.AppendFormat(CurrencyNbuBuySellLineFormat, currencyInfo.RUB.Nbu.Buy);
-            sb.AppendFormat(CurrencyInterbankBuySellLineFormat, currencyInfo.RUB.Interbank.Sell, currencyInfo.RUB.Interbank.Buy, rubInterbankSellDiff, rubInterbankBuyDiff);
+            sb.AppendLine("--RUB--");
+            sb.AppendFormatLine(CurrencyNbuBuySellLineFormat, currencyInfo.RUB.Nbu.Buy);
+            sb.AppendFormatLine(CurrencyInterbankBuySellLineFormat, currencyInfo.RUB.Interbank.Sell, currencyInfo.RUB.Interbank.Buy, rubInterbankSellDiff, rubInterbankBuyDiff);
 
             return sb.ToString();
         }

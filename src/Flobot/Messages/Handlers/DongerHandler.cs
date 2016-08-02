@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Flobot.Common;
 using Flobot.Identity;
 using Flobot.Messages.Handlers.Donger;
 using Microsoft.Bot.Connector;
@@ -55,12 +56,28 @@ namespace Flobot.Messages.Handlers
 
         private string GetPopularDongers()
         {
-            return string.Join(SkypeNewLine, Store.GetAllDongers().Where(d => d.IsPopular).Select(d => d.Text));
+            StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);
+
+            var popularDongers = Store.GetAllDongers().Where(d => d.IsPopular);
+
+            foreach (var donger in popularDongers)
+            {
+                sb.AppendLine(donger.Text);
+            }
+
+            return sb.ToString();
         }
 
         private string GetAllDongers()
         {
-            return string.Join(SkypeNewLine, Store.GetAllDongers().Select(d => d.Text));
+            StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);
+
+            foreach (var donger in Store.GetAllDongers())
+            {
+                sb.AppendLine(donger.Text);
+            }
+
+            return sb.ToString();
         }
     }
 }
