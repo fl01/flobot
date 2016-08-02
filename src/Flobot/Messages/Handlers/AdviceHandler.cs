@@ -24,7 +24,23 @@ namespace Flobot.Messages.Handlers
 
         protected override string GetReplyMessage(Activity activity)
         {
-            return adviceProvider.GetAdvice();
+            string advice = adviceProvider.GetAdvice();
+
+            string fromLowerChar = TransformToLowerStart(advice);
+
+            if (!string.IsNullOrEmpty(Message.CommandArg))
+            {
+                return $"{Message.CommandArg}, {fromLowerChar}";
+            }
+            else
+            {
+                return $"{Caller.Name}, {fromLowerChar}";
+            }
+        }
+
+        private string TransformToLowerStart(string text)
+        {
+            return Char.ToLowerInvariant(text[0]) + text.Substring(1);
         }
     }
 }
