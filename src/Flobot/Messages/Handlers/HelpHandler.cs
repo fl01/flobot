@@ -14,18 +14,29 @@ namespace Flobot.Messages.Handlers
     [Message("help")]
     public class HelpHandler : MessageHandlerBase
     {
-        public HelpHandler(User caller, Message message)
-            : base(caller, message)
+        public HelpHandler(ActivityBundle activityBundle)
+            : base(activityBundle)
         {
         }
 
-        protected override string GetReplyMessage(Activity activity)
+        protected override IEnumerable<Activity> CreateHelpReplies()
+        {
+            return new[] { ActivityBundle.Activity.CreateReply("...") };
+        }
+
+        protected override IEnumerable<Activity> CreateReplies()
+        {
+            var replyString = GetReplyMessage();
+            return new[] { ActivityBundle.Activity.CreateReply(replyString) };
+        }
+
+        private string GetReplyMessage()
         {
             var permittedHandlers = GetPermittedHandlers();
 
             StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);
 
-            sb.AppendLine($"{Caller.Name}({Caller.Role}), list of your commands is:");
+            sb.AppendLine($"{ActivityBundle.Caller.Name}, list of your commands is:");
 
             foreach (var handler in permittedHandlers)
             {
@@ -47,7 +58,7 @@ namespace Flobot.Messages.Handlers
         {
             return Assembly
                 .GetExecutingAssembly()
-                .GetPermittedTypes<IMessageHandler>(Caller);
+                .GetPermittedTypes<IMessageHandler>(ActivityBundle.Caller);
         }
     }
 }

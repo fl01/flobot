@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Flobot.Common;
 using Flobot.Identity;
 using Flobot.Messages;
 using Flobot.Messages.Handlers;
@@ -31,62 +33,71 @@ namespace Flobot
         /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
-            Activity reply;
+            IEnumerable<Activity> replies;
 
             try
             {
                 switch (activity.Type)
                 {
                     case ActivityTypes.Message:
-                        reply = HandleMessageActivity(activity);
+                        replies = HandleMessageActivity(activity);
                         break;
                     default:
-                        reply = null;
+                        replies = Enumerable.Empty<Activity>();
                         break;
                 }
             }
             catch (Exception)
             {
                 // TODO: log error
-                reply = null;
+                replies = Enumerable.Empty<Activity>();
             }
 
-            if (reply != null)
+            if (replies != null)
             {
-                ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-                await connector.Conversations.ReplyToActivityAsync(reply);
+                foreach (var reply in replies)
+                {
+                    ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                    await connector.Conversations.ReplyToActivityAsync(reply);
+                }
             }
 
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
         }
 
-        private Activity HandleMessageActivity(Activity activity)
+        private IEnumerable<Activity> HandleMessageActivity(Activity activity)
         {
             activity.RemoveRecipientMention();
             User user = userManager.RecognizeUser(activity.From);
             Message message = messageParser.Parse(activity.Text);
-            IMessageHandlerProvider handlerProvider = new MessageHandlerProvider(user);
-            IMessageHandler handler = handlerProvider.GetHandler(message);
-            Activity reply;
+
+            ActivityBundle bundle = new ActivityBundle(activity, message, user);
+            IMessageHandlerProvider handlerProvider = new MessageHandlerProvider(bundle);
+            IMessageHandler handler = handlerProvider.GetHandler();
+
+            List<Activity> replies = new List<Activity>();
 
             if (handler == null)
             {
                 if (message.IsCommand)
                 {
-                    reply = activity.CreateReply("Unknown command. Please type !help to see your list of supported commands.");
+                    var unknownCommandReply = activity.CreateReply("Unknown command. Please type !help to see your list of supported commands.");
+                    replies.Add(unknownCommandReply);
                 }
                 else // should never occur
                 {
-                    reply = activity.CreateReply($"Internal error occurred. Please try again later.");
+                    var internalErrorReply = activity.CreateReply($"Internal error occurred. Please try again later.");
+                    replies.Add(internalErrorReply);
                 }
             }
             else
             {
-                reply = handler.CreateReply(activity);
+                var successReplies = handler.GetReplies();
+                replies.AddRange(successReplies);
             }
 
-            return reply;
+            return replies;
         }
     }
 }

@@ -28,14 +28,25 @@ namespace Flobot.Messages.Handlers
             }
         }
 
-        public DongerHandler(User caller, Message message)
-            : base(caller, message)
+        public DongerHandler(ActivityBundle activityBundle)
+            : base(activityBundle)
         {
         }
 
-        protected override string GetReplyMessage(Activity activity)
+        protected override IEnumerable<Activity> CreateReplies()
         {
-            switch (Message.SubCommand)
+            string replyMessage = GetReplyMessage();
+            return new[] { ActivityBundle.Activity.CreateReply(replyMessage) };
+        }
+
+        protected override IEnumerable<Activity> CreateHelpReplies()
+        {
+            return new[] { ActivityBundle.Activity.CreateReply("...") };
+        }
+
+        private string GetReplyMessage()
+        {
+            switch (ActivityBundle.Message.SubCommand)
             {
                 case "top":
                     return GetPopularDongers();

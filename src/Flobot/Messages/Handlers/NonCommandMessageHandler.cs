@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Flobot.Common;
 using Flobot.Identity;
 using Microsoft.Bot.Connector;
 
@@ -9,14 +10,19 @@ namespace Flobot.Messages.Handlers
 {
     public class NonCommandMessageHandler : MessageHandlerBase
     {
-        public NonCommandMessageHandler(User caller, Message message)
-            : base(caller, message)
+        public NonCommandMessageHandler(ActivityBundle activityBundle)
+            : base(activityBundle)
         {
         }
 
-        protected override string GetReplyMessage(Activity activity)
+        protected override IEnumerable<Activity> CreateHelpReplies()
         {
-            return $"Hello {activity.From.Name}";
+            return new[] { ActivityBundle.Activity.CreateReply("...") };
+        }
+
+        protected override IEnumerable<Activity> CreateReplies()
+        {
+            return new[] { ActivityBundle.Activity.CreateReply($"Hello {ActivityBundle.Activity.From.Name}") };
         }
     }
 }

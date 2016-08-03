@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Flobot.Common;
 using Flobot.Identity;
 using Flobot.Messages.Handlers.Fuck;
 using Microsoft.Bot.Connector;
@@ -25,33 +26,34 @@ namespace Flobot.Messages.Handlers
 
                 return proxy;
             }
-
         }
-        public FuckHandler(User caller, Message message)
-            : base(caller, message)
+
+        public FuckHandler(ActivityBundle activityBundle)
+            : base(activityBundle)
         {
         }
 
-        protected override string GetReplyMessage(Activity activity)
+        protected override IEnumerable<Activity> CreateReplies()
         {
-            if (string.IsNullOrEmpty(Message.CommandArg))
+            string replyMessage = GetReplyMessage();
+            return new[] { ActivityBundle.Activity.CreateReply(replyMessage) };
+        }
+
+        protected override IEnumerable<Activity> CreateHelpReplies()
+        {
+            return new[] { ActivityBundle.Activity.CreateReply("...") };
+        }
+
+        private string GetReplyMessage()
+        {
+            if (string.IsNullOrEmpty(ActivityBundle.Message.CommandArg))
             {
-                return GetFromReply();
+                return Proxy.GetRandomFromReply(ActivityBundle.Caller.Name);
             }
             else
             {
-                return GetFromToNameReply();
+                return Proxy.GetRandomFromToNameReply(ActivityBundle.Message.CommandArg, ActivityBundle.Caller.Name);
             }
-        }
-
-        private string GetFromReply()
-        {
-            return Proxy.GetRandomFromReply(Caller.Name);
-        }
-
-        private string GetFromToNameReply()
-        {
-            return Proxy.GetRandomFromToNameReply(Message.CommandArg, Caller.Name);
         }
     }
 }

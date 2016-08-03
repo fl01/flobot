@@ -8,6 +8,6 @@ namespace Flobot.Messages.Handlers
 {
     public interface IMessageHandler
     {
-        Activity CreateReply(Activity activity);
+        IEnumerable<Activity> GetReplies();
     }
 }

@@ -32,12 +32,23 @@ namespace Flobot.Messages.Handlers
             }
         }
 
-        public CurrencyHandler(User caller, Message message)
-            : base(caller, message)
+        public CurrencyHandler(ActivityBundle activityBundle)
+            : base(activityBundle)
         {
         }
 
-        protected override string GetReplyMessage(Activity activity)
+        protected override IEnumerable<Activity> CreateReplies()
+        {
+            string replyMessage = GetReplyMessage();
+            return new[] { ActivityBundle.Activity.CreateReply(replyMessage) };
+        }
+
+        protected override IEnumerable<Activity> CreateHelpReplies()
+        {
+            return new[] { ActivityBundle.Activity.CreateReply("...") };
+        }
+
+        private string GetReplyMessage()
         {
             CurrencyContainer currencyInfo = Proxy.GetCurrencyInfo();
             CurrencyContainer previousDayInfo = Proxy.GetCurrencyInfo(DateTime.Now.AddDays(-1));

@@ -9,6 +9,6 @@ namespace Flobot.Messages
 {
     public interface IMessageHandlerProvider
     {
-        IMessageHandler GetHandler(Message message);
+        IMessageHandler GetHandler();
     }
 }

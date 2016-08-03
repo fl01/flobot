@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Web;
+using Flobot.Common;
 using Flobot.Identity;
 using Flobot.Messages.Handlers.Advice;
 using Microsoft.Bot.Connector;
@@ -16,25 +17,36 @@ namespace Flobot.Messages.Handlers
     {
         private AdviceProvider adviceProvider;
 
-        public AdviceHandler(User caller, Message message)
-            : base(caller, message)
+        public AdviceHandler(ActivityBundle activityBundle)
+            : base(activityBundle)
         {
             adviceProvider = new AdviceProvider();
         }
 
-        protected override string GetReplyMessage(Activity activity)
+        protected override IEnumerable<Activity> CreateReplies()
+        {
+            string replyMessage = GetReplyMessage();
+            return new[] { ActivityBundle.Activity.CreateReply(replyMessage) };
+        }
+
+        protected override IEnumerable<Activity> CreateHelpReplies()
+        {
+            return new[] { ActivityBundle.Activity.CreateReply("...") };
+        }
+
+        private string GetReplyMessage()
         {
             string advice = adviceProvider.GetAdvice();
 
             string fromLowerChar = TransformToLowerStart(advice);
 
-            if (!string.IsNullOrEmpty(Message.CommandArg))
+            if (!string.IsNullOrEmpty(ActivityBundle.Message.CommandArg))
             {
-                return $"{Message.CommandArg}, {fromLowerChar}";
+                return $"{ActivityBundle.Message.CommandArg}, {fromLowerChar}";
             }
             else
             {
-                return $"{Caller.Name}, {fromLowerChar}";
+                return $"{ActivityBundle.Caller.Name}, {fromLowerChar}";
             }
         }
 

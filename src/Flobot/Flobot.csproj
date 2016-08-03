@@ -119,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Common\ActivityBundle.cs" />
     <Compile Include="Common\StringBuilderEx.cs" />
     <Compile Include="Common\StringBuilderExMode.cs" />
     <Compile Include="Controllers\MessagesController.cs" />

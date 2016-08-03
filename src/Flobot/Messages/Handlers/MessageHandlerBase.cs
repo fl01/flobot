@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Flobot.Common;
 using Flobot.Identity;
 using Microsoft.Bot.Connector;
 
@@ -9,32 +10,34 @@ namespace Flobot.Messages.Handlers
 {
     public abstract class MessageHandlerBase : IMessageHandler
     {
-        protected Message Message { get; private set; }
+        protected ActivityBundle ActivityBundle { get; private set; }
 
-        protected User Caller { get; private set; }
-
-        public MessageHandlerBase(User caller, Message message)
+        public MessageHandlerBase(ActivityBundle activityBundle)
         {
-            Message = message;
-            Caller = caller;
+            ActivityBundle = activityBundle;
         }
 
-        public Activity CreateReply(Activity activity)
+        public IEnumerable<Activity> GetReplies()
         {
-            string replyMessage;
-
             try
             {
-                replyMessage = GetReplyMessage(activity);
+                if ("/?".Equals(ActivityBundle.Message.CommandArg, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    return CreateHelpReplies();
+                }
+                else
+                {
+                    return CreateReplies();
+                }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                replyMessage = "Internal error. " + e.Message;
+                return new[] { ActivityBundle.Activity.CreateReply("Internal error. " + e.Message) };
             }
-
-            return activity.CreateReply(replyMessage);
         }
 
-        protected abstract string GetReplyMessage(Activity activity);
+        protected abstract IEnumerable<Activity> CreateReplies();
+
+        protected abstract IEnumerable<Activity> CreateHelpReplies();
     }
 }

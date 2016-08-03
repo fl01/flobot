@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using Flobot.Common;
 using Flobot.Identity;
 using Flobot.Messages.Handlers;
 
@@ -10,23 +11,18 @@ namespace Flobot.Messages
 {
     public class MessageHandlerProvider : IMessageHandlerProvider
     {
-        private User caller;
+        private ActivityBundle activityBundle;
 
-        public MessageHandlerProvider(User caller)
+        public MessageHandlerProvider(ActivityBundle activityBundle)
         {
-            this.caller = caller;
+            this.activityBundle = activityBundle;
         }
 
-        public IMessageHandler GetHandler(Message message)
+        public IMessageHandler GetHandler()
         {
-            if (message == null)
+            if (!activityBundle.Message.IsCommand)
             {
-                throw new ArgumentNullException(nameof(message));
-            }
-
-            if (!message.IsCommand)
-            {
-                return new NonCommandMessageHandler(caller, message);
+                return new NonCommandMessageHandler(activityBundle);
             }
 
             try
@@ -34,14 +30,14 @@ namespace Flobot.Messages
                 // let's search for a handler for the requested command
                 IEnumerable<Type> permittedHandlers = GetPermittedMessageHandlers();
 
-                Type matchedHandlerType = GetFirstMatchedHandler(permittedHandlers, message);
+                Type matchedHandlerType = GetFirstMatchedHandler(permittedHandlers);
 
                 if (matchedHandlerType == null)
                 {
                     return null;
                 }
 
-                return Activator.CreateInstance(matchedHandlerType, caller, message) as IMessageHandler;
+                return Activator.CreateInstance(matchedHandlerType, activityBundle) as IMessageHandler;
             }
             catch (Exception)
             {
@@ -50,7 +46,7 @@ namespace Flobot.Messages
             }
         }
 
-        private Type GetFirstMatchedHandler(IEnumerable<Type> handlers, Message message)
+        private Type GetFirstMatchedHandler(IEnumerable<Type> handlers)
         {
             foreach (var handler in handlers)
             {
@@ -58,7 +54,7 @@ namespace Flobot.Messages
 
                 foreach (string command in supportedCommands)
                 {
-                    if (command.Equals(message.Command, StringComparison.CurrentCultureIgnoreCase))
+                    if (command.Equals(activityBundle.Message.Command, StringComparison.CurrentCultureIgnoreCase))
                     {
                         return handler;
                     }
@@ -72,7 +68,7 @@ namespace Flobot.Messages
         {
             return Assembly
                 .GetExecutingAssembly()
-                .GetPermittedTypes<IMessageHandler>(caller);
+                .GetPermittedTypes<IMessageHandler>(activityBundle.Caller);
         }
     }
 }
