@@ -72,7 +72,16 @@ namespace Flobot.Messages.Handlers
 
             if (!string.IsNullOrEmpty(ActivityBundle.Message.CommandArg))
             {
-                card.Title = ActivityBundle.Message.CommandArg;
+                // current version of Skype (7.26.01) wraps text if it is longer than 26 symbols.
+                // so, let's display text bigger if we can (ᵔ◡ᵔ)
+                if (ActivityBundle.Message.CommandArg.Length <= 26)
+                {
+                    card.Title = ActivityBundle.Message.CommandArg;
+                }
+                else
+                {
+                    card.Text = ActivityBundle.Message.CommandArg;
+                }
             }
 
             List<CardImage> images = new List<CardImage>();
