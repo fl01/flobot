@@ -70,6 +70,11 @@ namespace Flobot.Messages.Handlers
 
             ThumbnailCard card = new ThumbnailCard();
 
+            if (!string.IsNullOrEmpty(ActivityBundle.Message.CommandArg))
+            {
+                card.Title = ActivityBundle.Message.CommandArg;
+            }
+
             List<CardImage> images = new List<CardImage>();
             images.Add(image);
             card.Images = images;
