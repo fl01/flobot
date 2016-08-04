@@ -36,6 +36,15 @@ namespace Flobot.Messages.Handlers
             }
         }
 
+        protected ThumbnailCard CreateThumbnailCard()
+        {
+            return new ThumbnailCard()
+            {
+                Images = new List<CardImage>()
+            };
+
+        }
+
         protected abstract IEnumerable<Activity> CreateReplies();
 
         protected abstract IEnumerable<Activity> CreateHelpReplies();

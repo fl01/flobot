@@ -68,13 +68,13 @@ namespace Flobot.Messages.Handlers
                 }
             }
 
-            ThumbnailCard card = new ThumbnailCard();
+            ThumbnailCard card = CreateThumbnailCard();
 
             if (!string.IsNullOrEmpty(ActivityBundle.Message.CommandArg))
             {
-                // current version of Skype (7.26.01) wraps text if it is longer than 26 symbols.
+                // current version of Skype (7.26.01) wraps thumbnail title if it is longer than 26 symbols or 2 lines
                 // so, let's display text bigger if we can (ᵔ◡ᵔ)
-                if (ActivityBundle.Message.CommandArg.Length <= 26)
+                if (ActivityBundle.Message.CommandArg.Length <= 26 && ActivityBundle.Message.CommandArg.Split('\n').Length <= 2)
                 {
                     card.Title = ActivityBundle.Message.CommandArg;
                 }
@@ -84,9 +84,7 @@ namespace Flobot.Messages.Handlers
                 }
             }
 
-            List<CardImage> images = new List<CardImage>();
-            images.Add(image);
-            card.Images = images;
+            card.Images.Add(image);
             imageReply.Attachments.Add(card.ToAttachment());
 
             replies.Add(imageReply);
