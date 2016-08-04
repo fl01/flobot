@@ -113,6 +113,55 @@
   <ItemGroup>
     <Content Include="default.htm" />
     <Content Include="Global.asax" />
+    <Content Include="Images\Lirik\lirikAppa.jpg" />
+    <Content Include="Images\Lirik\lirikB.jpg" />
+    <Content Include="Images\Lirik\lirikBB.jpg" />
+    <Content Include="Images\Lirik\lirikBLIND.jpg" />
+    <Content Include="Images\Lirik\lirikC.jpg" />
+    <Content Include="Images\Lirik\lirikCHAMP.jpg" />
+    <Content Include="Images\Lirik\lirikCLAP.jpg" />
+    <Content Include="Images\Lirik\lirikCRASH.jpg" />
+    <Content Include="Images\Lirik\lirikD.jpg" />
+    <Content Include="Images\Lirik\lirikDJ.jpg" />
+    <Content Include="Images\Lirik\lirikF.jpg" />
+    <Content Include="Images\Lirik\lirikFAT.jpg" />
+    <Content Include="Images\Lirik\lirikFEELS.jpg" />
+    <Content Include="Images\Lirik\lirikGasm.jpg" />
+    <Content Include="Images\Lirik\lirikGOOD.jpg" />
+    <Content Include="Images\Lirik\lirikGOTY.jpg" />
+    <Content Include="Images\Lirik\lirikGREAT.jpg" />
+    <Content Include="Images\Lirik\lirikH.jpg" />
+    <Content Include="Images\Lirik\lirikHOLD.jpg" />
+    <Content Include="Images\Lirik\lirikHug.jpg" />
+    <Content Include="Images\Lirik\lirikHYPE.jpg" />
+    <Content Include="Images\Lirik\lirikL.jpg" />
+    <Content Include="Images\Lirik\lirikLEWD.jpg" />
+    <Content Include="Images\Lirik\lirikLOOT.jpg" />
+    <Content Include="Images\Lirik\lirikLUL.jpg" />
+    <Content Include="Images\Lirik\lirikM.jpg" />
+    <Content Include="Images\Lirik\lirikMEOW.jpg" />
+    <Content Include="Images\Lirik\lirikMLG.jpg" />
+    <Content Include="Images\Lirik\lirikN.jpg" />
+    <Content Include="Images\Lirik\lirikNICE.jpg" />
+    <Content Include="Images\Lirik\lirikNON.jpg" />
+    <Content Include="Images\Lirik\lirikNOT.jpg" />
+    <Content Include="Images\Lirik\lirikO.jpg" />
+    <Content Include="Images\Lirik\lirikOBESE.jpg" />
+    <Content Include="Images\Lirik\lirikOHGOD.jpg" />
+    <Content Include="Images\Lirik\lirikP.jpg" />
+    <Content Include="Images\Lirik\lirikPOOL.jpg" />
+    <Content Include="Images\Lirik\lirikPOOP.jpg" />
+    <Content Include="Images\Lirik\lirikPUKE.jpg" />
+    <Content Include="Images\Lirik\lirikREKT.jpg" />
+    <Content Include="Images\Lirik\lirikRIP.jpg" />
+    <Content Include="Images\Lirik\lirikSALT.jpg" />
+    <Content Include="Images\Lirik\lirikSCARED.jpg" />
+    <Content Include="Images\Lirik\lirikSHUCKS.jpg" />
+    <Content Include="Images\Lirik\lirikTEN.jpg" />
+    <Content Include="Images\Lirik\lirikThump.jpg" />
+    <Content Include="Images\Lirik\lirikTRUCK.jpg" />
+    <Content Include="Images\Lirik\lirikW.jpg" />
+    <Content Include="Images\Lirik\lirikWc.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -154,6 +203,7 @@
     </Compile>
     <Compile Include="Messages\Handlers\HelpHandler.cs" />
     <Compile Include="Messages\Handlers\IMessageHandler.cs" />
+    <Compile Include="Messages\Handlers\LirikHandler.cs" />
     <Compile Include="Messages\IMessageHandlerProvider.cs" />
     <Compile Include="Messages\MessageAttribute.cs" />
     <Compile Include="Messages\Handlers\MessageHandlerBase.cs" />
@@ -175,7 +225,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
