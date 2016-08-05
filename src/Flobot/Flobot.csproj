@@ -210,6 +210,7 @@
     <Compile Include="Messages\Handlers\MessageHandlerBase.cs" />
     <Compile Include="Messages\MessageHandlerProvider.cs" />
     <Compile Include="Messages\Handlers\NonCommandMessageHandler.cs" />
+    <Compile Include="Messages\Handlers\PsychoRaidHandler.cs" />
     <Compile Include="Messages\TypeLoaderExtensions.cs" />
     <Compile Include="Messages\IMessageParser.cs" />
     <Compile Include="Messages\Message.cs" />
