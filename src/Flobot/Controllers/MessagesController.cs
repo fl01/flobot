@@ -5,13 +5,12 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Description;
 using Flobot.Common;
 using Flobot.Identity;
+using Flobot.Logging;
 using Flobot.Messages;
 using Flobot.Messages.Handlers;
 using Microsoft.Bot.Connector;
-using Newtonsoft.Json;
 
 namespace Flobot
 {
@@ -20,11 +19,13 @@ namespace Flobot
     {
         private IUserManager userManager;
         private IMessageParser messageParser;
+        private ILog logger;
 
         public MessagesController()
         {
             userManager = new UserManager(new UserStore());
             messageParser = new RegexMessageParser();
+            logger = this.GetLogger();
         }
 
         /// <summary>
@@ -47,9 +48,9 @@ namespace Flobot
                         break;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO: log error
+                logger.Error(ex);
                 replies = Enumerable.Empty<Activity>();
             }
 

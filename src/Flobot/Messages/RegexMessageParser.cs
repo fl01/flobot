@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using Flobot.Logging;
 
 namespace Flobot.Messages
 {
@@ -10,8 +11,13 @@ namespace Flobot.Messages
     {
         private const string CommandPrefix = "!";
         private const string SubCommandDelimeter = ".";
-
         private readonly string commandPattern = $"^{CommandPrefix}([a-zA-Z0-9]+)([{SubCommandDelimeter}]([a-zA-Z0-9]+))?"; // represents !command.subcommand
+        private ILog logger;
+
+        public RegexMessageParser()
+        {
+            logger = this.GetLogger();
+        }
 
         public Message Parse(string text)
         {
@@ -45,9 +51,9 @@ namespace Flobot.Messages
 
                 return parseResult;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO : log
+                logger.Error(ex);
                 return CommandParseResult.Empty;
             }
         }

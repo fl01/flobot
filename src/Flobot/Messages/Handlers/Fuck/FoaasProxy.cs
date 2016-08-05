@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web;
 using Flobot.Common;
-using Newtonsoft.Json;
+using Flobot.Logging;
 
 namespace Flobot.Messages.Handlers.Fuck
 {
@@ -12,8 +9,54 @@ namespace Flobot.Messages.Handlers.Fuck
     {
         private List<string> fromReplyLinks;
         private List<string> fromToNameReplyLinks;
+        private ILog logger;
 
         public FoaasProxy()
+        {
+            InitFooasLinks();
+            logger = this.GetLogger();
+        }
+
+        public string GetRandomFromReply(string from)
+        {
+            var link = fromReplyLinks[new Random().Next(fromReplyLinks.Count)];
+
+            string formattedLink = string.Format(link, from);
+            Uri url = new Uri(formattedLink);
+            FoaasResponse reply = GetFoaasReply(url);
+
+            return reply.ToString();
+        }
+
+        public string GetRandomFromToNameReply(string name, string from)
+        {
+            var link = fromToNameReplyLinks[new Random().Next(fromToNameReplyLinks.Count)];
+
+            string formattedLink = string.Format(link, name, from);
+            Uri url = new Uri(formattedLink);
+            FoaasResponse reply = GetFoaasReply(url);
+
+            return reply.Message;
+        }
+
+        private FoaasResponse GetFoaasReply(Uri url)
+        {
+            try
+            {
+                using (SimpleJsonClient wc = new SimpleJsonClient())
+                {
+                    FoaasResponse response = wc.GetJsonObject<FoaasResponse>(url);
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                return new FoaasResponse() { Message = "Something went wrong! Try again later." };
+            }
+        }
+
+        private void InitFooasLinks()
         {
             fromReplyLinks = new List<string>()
             {
@@ -70,45 +113,6 @@ namespace Flobot.Messages.Handlers.Fuck
                 "http://foaas.com/keep/{0}/{1}",
                 "http://foaas.com/look/{0}/{1}"
             };
-        }
-
-        public string GetRandomFromReply(string from)
-        {
-            var link = fromReplyLinks[new Random().Next(fromReplyLinks.Count)];
-
-            string formattedLink = string.Format(link, from);
-            Uri url = new Uri(formattedLink);
-            FoaasResponse reply = GetFoaasReply(url);
-
-            return reply.ToString();
-        }
-
-        public string GetRandomFromToNameReply(string name, string from)
-        {
-            var link = fromToNameReplyLinks[new Random().Next(fromToNameReplyLinks.Count)];
-
-            string formattedLink = string.Format(link, name, from);
-            Uri url = new Uri(formattedLink);
-            FoaasResponse reply = GetFoaasReply(url);
-
-            return reply.Message;
-        }
-
-        private FoaasResponse GetFoaasReply(Uri url)
-        {
-            try
-            {
-                using (SimpleJsonClient wc = new SimpleJsonClient())
-                {
-                    FoaasResponse response = wc.GetJsonObject<FoaasResponse>(url);
-                    return response;
-                }
-            }
-            catch (Exception)
-            {
-                // TODO : log
-                return new FoaasResponse() { Message = "Something went wrong! Try again later." };
-            }
         }
     }
 }

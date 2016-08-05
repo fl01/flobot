@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Web;
 using Flobot.Common;
-using Flobot.Identity;
+using Flobot.Logging;
 using Flobot.Messages.Handlers;
 
 namespace Flobot.Messages
@@ -12,10 +10,12 @@ namespace Flobot.Messages
     public class MessageHandlerProvider : IMessageHandlerProvider
     {
         private ActivityBundle activityBundle;
+        private ILog logger;
 
         public MessageHandlerProvider(ActivityBundle activityBundle)
         {
             this.activityBundle = activityBundle;
+            this.logger = this.GetLogger();
         }
 
         public IMessageHandler GetHandler()
@@ -39,10 +39,10 @@ namespace Flobot.Messages
 
                 return Activator.CreateInstance(matchedHandlerType, activityBundle) as IMessageHandler;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.Error(ex);
                 return null;
-                // TODO : log
             }
         }
 

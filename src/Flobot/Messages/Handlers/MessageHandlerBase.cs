@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Flobot.Common;
 using Flobot.Identity;
+using Flobot.Logging;
 using Microsoft.Bot.Connector;
 
 namespace Flobot.Messages.Handlers
@@ -12,9 +13,12 @@ namespace Flobot.Messages.Handlers
     {
         protected ActivityBundle ActivityBundle { get; private set; }
 
+        protected ILog Logger { get; private set; }
+
         public MessageHandlerBase(ActivityBundle activityBundle)
         {
             ActivityBundle = activityBundle;
+            Logger = this.GetLogger();
         }
 
         public IEnumerable<Activity> GetReplies()

@@ -231,6 +231,10 @@
       <Name>Flobot.Eliza</Name>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
+    <ProjectReference Include="..\Flobot.Logging\Flobot.Logging.csproj">
+      <Project>{26ae627c-34c0-4da5-95bc-9e4c17c159c0}</Project>
+      <Name>Flobot.Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
