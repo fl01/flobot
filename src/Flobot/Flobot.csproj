@@ -204,6 +204,7 @@
     <Compile Include="Messages\Handlers\HelpHandler.cs" />
     <Compile Include="Messages\Handlers\IMessageHandler.cs" />
     <Compile Include="Messages\Handlers\LirikHandler.cs" />
+    <Compile Include="Messages\Handlers\MeHandler.cs" />
     <Compile Include="Messages\IMessageHandlerProvider.cs" />
     <Compile Include="Messages\MessageAttribute.cs" />
     <Compile Include="Messages\Handlers\MessageHandlerBase.cs" />
