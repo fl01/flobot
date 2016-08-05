@@ -8,6 +8,7 @@ namespace Flobot.Identity
     public enum Role
     {
         User,
+        Registered,
         Advanced,
         Admin
     }
