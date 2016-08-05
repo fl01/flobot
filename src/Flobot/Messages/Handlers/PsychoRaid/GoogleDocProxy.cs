@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -69,7 +70,7 @@ namespace Flobot.Messages.Handlers.PsychoRaid
             {
                 using (WebClient client = new WebClient())
                 {
-                    client.DownloadFile("https://docs.google.com/spreadsheets/d/1qUVcXXFcp9Zi6qr1Zj5HGbR-4u6MJGMZyXkie58Qehw/export?format=xlsx&id=1qUVcXXFcp9Zi6qr1Zj5HGbR-4u6MJGMZyXkie58Qehw", FileName);
+                    client.DownloadFile(ConfigurationManager.AppSettings["PsychoRaidSpreadsheet"], FileName);
                 }
 
                 FileStream stream = File.Open(FileName, FileMode.Open, FileAccess.Read);
