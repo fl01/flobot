@@ -50,6 +50,14 @@
       <HintPath>..\packages\Chronic.Signed.0.3.2\lib\net40\Chronic.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Excel, Version=2.1.2.3, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.2.1.2.3\lib\net45\Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Bot.Builder, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bot.Builder.3.1.0\lib\net46\Microsoft.Bot.Builder.dll</HintPath>
       <Private>True</Private>
@@ -109,6 +117,10 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Zlib.Portable, Version=1.11.0.0, Culture=neutral, PublicKeyToken=431cba815f6a8b5b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Zlib.Portable.Signed.1.11.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="default.htm" />
@@ -206,6 +218,8 @@
     <Compile Include="Messages\Handlers\IMessageHandler.cs" />
     <Compile Include="Messages\Handlers\LirikHandler.cs" />
     <Compile Include="Messages\Handlers\MeHandler.cs" />
+    <Compile Include="Messages\Handlers\PsychoRaid\GoogleDocProxy.cs" />
+    <Compile Include="Messages\Handlers\PsychoRaid\RaidMember.cs" />
     <Compile Include="Messages\IMessageHandlerProvider.cs" />
     <Compile Include="Messages\MessageAttribute.cs" />
     <Compile Include="Messages\Handlers\MessageHandlerBase.cs" />
@@ -232,7 +246,6 @@
     <ProjectReference Include="..\Flobot.Eliza\Flobot.Eliza.csproj">
       <Project>{2cbeebcb-abb7-4d2b-92da-3fdbf4ff5806}</Project>
       <Name>Flobot.Eliza</Name>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
     <ProjectReference Include="..\Flobot.Logging\Flobot.Logging.csproj">
       <Project>{26ae627c-34c0-4da5-95bc-9e4c17c159c0}</Project>

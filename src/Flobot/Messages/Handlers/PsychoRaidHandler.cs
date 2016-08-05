@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Flobot.Common;
 using Flobot.Identity;
+using Flobot.Messages.Handlers.PsychoRaid;
 using Microsoft.Bot.Connector;
 
 namespace Flobot.Messages.Handlers
@@ -12,20 +13,47 @@ namespace Flobot.Messages.Handlers
     [Message("PsychoRaid", "pr")]
     public class PsychoRaidHandler : MessageHandlerBase
     {
+        private GoogleDocProxy proxy;
+
+        private GoogleDocProxy Proxy
+        {
+            get
+            {
+                if (proxy == null)
+                {
+                    proxy = new GoogleDocProxy();
+                }
+
+                return proxy;
+            }
+        }
+
+        private Dictionary<string, Func<IEnumerable<Activity>>> subCommands;
+
         public PsychoRaidHandler(ActivityBundle activityBundle)
             : base(activityBundle)
         {
+            subCommands = new Dictionary<string, Func<IEnumerable<Activity>>>()
+            {
+                {"all", GetAllMembers }
+            };
         }
 
         protected override IEnumerable<Activity> CreateHelpReplies()
         {
-            return new[] { ActivityBundle.Activity.CreateReply("...") };
+            StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);
+
+            foreach (var key in subCommands.Select(x => x.Key))
+            {
+                sb.AppendLine("!PsychoRaid." + key);
+            }
+
+            return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
         }
 
         protected override IEnumerable<Activity> CreateReplies()
         {
-
-            if (string.IsNullOrEmpty(ActivityBundle.Message.SubCommand))
+            if (!string.IsNullOrEmpty(ActivityBundle.Message.SubCommand))
             {
                 return GetSubCommandReplies();
             }
@@ -37,17 +65,47 @@ namespace Flobot.Messages.Handlers
 
         private IEnumerable<Activity> GetSubCommandReplies()
         {
-            return Enumerable.Empty<Activity>();
+            Func<IEnumerable<Activity>> subCommand;
+
+            if (!subCommands.TryGetValue(ActivityBundle.Message.SubCommand, out subCommand))
+            {
+                return new[] { ActivityBundle.Activity.CreateReply("Unknown subcommand. Try use /? to see a list of available commands") };
+            }
+
+            return subCommand();
+        }
+
+        private IEnumerable<Activity> GetAllMembers()
+        {
+            StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);
+
+            IEnumerable<RaidMember> allmembers = Proxy.GetAllRaidMembers();
+
+            foreach (var member in allmembers)
+            {
+                sb.AppendLine($"Member: {member.Name}, Sum: {member.Sum}");
+            }
+
+            return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
         }
 
         private IEnumerable<Activity> GetCommandReplies()
         {
             if (string.IsNullOrEmpty(ActivityBundle.Message.CommandArg))
             {
-                return new[] { ActivityBundle.Activity.CreateReply("Please provide character name!") };
+                return new[] { ActivityBundle.Activity.CreateReply("Character name is required.") };
             }
 
-            return Enumerable.Empty<Activity>();
+            RaidMember member = Proxy.GetRaidMember(ActivityBundle.Message.CommandArg);
+
+            if (member == null)
+            {
+                return new[] { ActivityBundle.Activity.CreateReply($"Member '{ActivityBundle.Message.CommandArg}' not found.") };
+            }
+
+            StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);
+            sb.AppendLine($"Member: {member.Name}, Sum: {member.Sum}");
+            return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
         }
     }
 }
