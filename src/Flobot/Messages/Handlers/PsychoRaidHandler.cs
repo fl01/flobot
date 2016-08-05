@@ -8,7 +8,7 @@ using Microsoft.Bot.Connector;
 
 namespace Flobot.Messages.Handlers
 {
-    [Permissions(Role.Advanced)]
+    [Permissions(Role.User, Group.PsychoRaid)]
     [Message("PsychoRaid", "pr")]
     public class PsychoRaidHandler : MessageHandlerBase
     {

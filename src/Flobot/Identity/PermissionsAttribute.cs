@@ -10,10 +10,13 @@ namespace Flobot.Identity
     {
         public Role Role { get; private set; }
 
+        public Group Group { get; private set; }
+
         // This is a positional argument
-        public PermissionsAttribute(Role role)
+        public PermissionsAttribute(Role role, Group group = Group.Default)
         {
             Role = role;
+            Group = group;
         }
     }
 }

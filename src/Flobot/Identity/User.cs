@@ -12,5 +12,7 @@ namespace Flobot.Identity
         public string Name { get; set; }
 
         public Role Role { get; set; }
+
+        public Group Group { get; set; }
     }
 }

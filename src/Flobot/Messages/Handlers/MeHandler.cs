@@ -29,6 +29,7 @@ namespace Flobot.Messages.Handlers
             sb.AppendLine($"ID: {ActivityBundle.Caller.Id}");
             sb.AppendLine($"Name: {ActivityBundle.Caller.Name}");
             sb.AppendLine($"Role: {ActivityBundle.Caller.Role}");
+            sb.AppendLine($"Group: {ActivityBundle.Caller.Group}");
 
             return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
         }

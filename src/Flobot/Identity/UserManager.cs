@@ -23,13 +23,14 @@ namespace Flobot.Identity
             {
                 return registeredUser;
             }
-            
+
             // user is not registered in the system
             return new User()
             {
                 Role = Role.User,
                 Id = account.Id,
-                Name = account.Name
+                Name = account.Name,
+                Group = Group.Default
             };
         }
     }

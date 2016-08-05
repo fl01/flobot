@@ -23,9 +23,20 @@ namespace Flobot.Messages
 
         public static IEnumerable<Type> GetPermittedTypes<T>(this Assembly assembly, User caller)
         {
-            return assembly.GetLoadableTypes()
-                .Where(typeof(T).IsAssignableFrom)
-                .Where(h => h.GetCustomAttribute<PermissionsAttribute>()?.Role <= caller.Role);
+            foreach (var type in assembly.GetLoadableTypes().Where(typeof(T).IsAssignableFrom))
+            {
+                var permissionsAttribute = type.GetCustomAttribute<PermissionsAttribute>();
+
+                if (permissionsAttribute == null)
+                {
+                    continue;
+                }
+
+                if (permissionsAttribute.Role <= caller.Role && (caller.Group.HasFlag(permissionsAttribute.Group) || caller.Group.HasFlag(Group.Administrators)))
+                {
+                    yield return type;
+                }
+            }
         }
     }
 }

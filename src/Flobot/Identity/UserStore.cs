@@ -13,7 +13,8 @@ namespace Flobot.Identity
         {
             users = new List<User>()
             {
-                new User() { Role = Role.Admin, Id = "29:1bg6E1DleuImOkBTeV71vPluAqvkdHJNxPidOccIXTW8", Name = "Artem V" }
+                new User() { Id = "29:1bg6E1DleuImOkBTeV71vPluAqvkdHJNxPidOccIXTW8", Name = "Artem V", Group = Group.Administrators, Role = Role.Admin },
+                new User() { Id = "29:1ANMOkUOM9d4f8-DgoQZeq6nbIW5MbJ0-WqjwvNY5DLM", Name = "psycho", Group = Group.Default | Group.PsychoRaid, Role = Role.User }
             };
         }
 
