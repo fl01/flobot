@@ -36,6 +36,7 @@ namespace Flobot.Messages.Handlers
             }
             catch (Exception e)
             {
+                Logger.Error(e);
                 return new[] { ActivityBundle.Activity.CreateReply("Internal error. " + e.Message) };
             }
         }
