@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using Excel;
+using Flobot.Common.Algorithms;
 using Flobot.Logging;
 
 namespace Flobot.Messages.Handlers.PsychoRaid
@@ -21,7 +22,11 @@ namespace Flobot.Messages.Handlers.PsychoRaid
             {
                 if (fileName == null)
                 {
-                    fileName = HttpRuntime.AppDomainAppPath + "Files/psycho/" + Guid.NewGuid().ToString("D");
+                    fileName = HttpRuntime.AppDomainAppPath + @"Files\psycho\" + Guid.NewGuid().ToString("D");
+
+#if DEBUG
+                    fileName = HttpRuntime.AppDomainAppPath + Guid.NewGuid().ToString("D");
+#endif
                 }
 
                 return fileName;
@@ -33,10 +38,18 @@ namespace Flobot.Messages.Handlers.PsychoRaid
             logger = this.GetLogger();
         }
 
-        public RaidMember GetRaidMember(string name)
+        public IEnumerable<RaidMember> GetRaidMembers(string name)
         {
             var allRaidMembers = InternalGetAllRaidMembers();
-            return allRaidMembers.FirstOrDefault(m => m.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
+            Levenshtein levenshtein = new Levenshtein();
+
+            foreach (var member in allRaidMembers)
+            {
+                if (levenshtein.GetDistance(name, member.Name, true) <= 1)
+                {
+                    yield return member;
+                }
+            }
         }
 
         public IEnumerable<RaidMember> GetAllRaidMembers()

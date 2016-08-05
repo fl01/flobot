@@ -96,15 +96,20 @@ namespace Flobot.Messages.Handlers
                 return new[] { ActivityBundle.Activity.CreateReply("Character name is required.") };
             }
 
-            RaidMember member = Proxy.GetRaidMember(ActivityBundle.Message.CommandArg);
+            IEnumerable<RaidMember> members = Proxy.GetRaidMembers(ActivityBundle.Message.CommandArg);
 
-            if (member == null)
+            if (members == null || !members.Any())
             {
                 return new[] { ActivityBundle.Activity.CreateReply($"Member '{ActivityBundle.Message.CommandArg}' not found.") };
             }
 
             StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);
-            sb.AppendLine($"Member: {member.Name}, Sum: {member.Sum}");
+
+            foreach (var member in members)
+            {
+                sb.AppendLine($"Member: {member.Name}, Sum: {member.Sum}");
+            }
+
             return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
         }
     }

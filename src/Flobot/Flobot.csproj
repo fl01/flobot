@@ -243,6 +243,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Flobot.Common\Flobot.Common.csproj">
+      <Project>{0425B714-D8E2-4FEC-AF9F-D301B08BE31C}</Project>
+      <Name>Flobot.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Flobot.Eliza\Flobot.Eliza.csproj">
       <Project>{2cbeebcb-abb7-4d2b-92da-3fdbf4ff5806}</Project>
       <Name>Flobot.Eliza</Name>
@@ -252,6 +256,7 @@
       <Name>Flobot.Logging</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
