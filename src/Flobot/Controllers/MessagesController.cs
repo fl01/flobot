@@ -43,6 +43,9 @@ namespace Flobot
                     case ActivityTypes.Message:
                         replies = HandleMessageActivity(activity);
                         break;
+                    case ActivityTypes.ContactRelationUpdate:
+                        replies = HandleBotAddedRemovedFromContact(activity);
+                        break;
                     default:
                         replies = Enumerable.Empty<Activity>();
                         break;
@@ -65,6 +68,18 @@ namespace Flobot
 
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
+        }
+
+        private IEnumerable<Activity> HandleBotAddedRemovedFromContact(Activity activity)
+        {
+            if ("Add".Equals(activity.Action, StringComparison.CurrentCultureIgnoreCase))
+            {
+                return new[] { activity.CreateReply($"Nice to meet you, {activity.From.Name}. I'm a flobot. Please type !help to see my commands. Also please visit https://flobot.enterflose.net/misc/PrivacyStatement.html to find out more about my policies.") };
+            }
+            else
+            {
+                return new[] { activity.CreateReply("Sorry to see you leaving...Good luck!") };
+            }
         }
 
         private IEnumerable<Activity> HandleMessageActivity(Activity activity)
