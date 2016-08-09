@@ -174,8 +174,8 @@
     <Content Include="Images\Lirik\lirikTRUCK.jpg" />
     <Content Include="Images\Lirik\lirikW.jpg" />
     <Content Include="Images\Lirik\lirikWc.jpg" />
-    <Content Include="Misc\PrivacyStatement.html" />
-    <Content Include="Misc\TermsAndConditions.html" />
+    <Content Include="Misc\PrivacyStatement.htm" />
+    <Content Include="Misc\TermsAndConditions.htm" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
