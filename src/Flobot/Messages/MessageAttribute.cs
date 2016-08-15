@@ -6,12 +6,15 @@ using System.Web;
 namespace Flobot.Messages
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
-    sealed class MessageAttribute : Attribute
+    public sealed class MessageAttribute : Attribute
     {
         public IEnumerable<string> SupportedCommands { get; private set; }
 
-        public MessageAttribute(params string[] supportedCommands)
+        public Section Section { get; private set; }
+
+        public MessageAttribute(Section section, params string[] supportedCommands)
         {
+            Section = section;
             SupportedCommands = supportedCommands;
         }
     }

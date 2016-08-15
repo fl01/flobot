@@ -11,7 +11,7 @@ using Microsoft.Bot.Connector;
 namespace Flobot.Messages.Handlers
 {
     [Permissions(Role.User)]
-    [Message("account", "acc")]
+    [Message(Section.Default, "account", "acc")]
     public class AccountHandler : MessageHandlerBase
     {
         private IUserManager userManager;

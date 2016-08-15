@@ -11,7 +11,7 @@ using Microsoft.Bot.Connector;
 namespace Flobot.Messages.Handlers
 {
     [Permissions(Role.User)]
-    [Message("lirik", "lrk")]
+    [Message(Section.Default, "lirik", "lrk")]
     public class LirikHandler : MessageHandlerBase
     {
         private Dictionary<string, string> imageContainer;

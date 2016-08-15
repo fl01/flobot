@@ -11,7 +11,7 @@ using Microsoft.Bot.Connector;
 namespace Flobot.Messages.Handlers
 {
     [Permissions(Role.User)]
-    [Message("help")]
+    [Message(Section.Help, "help")]
     public class HelpHandler : MessageHandlerBase
     {
         public HelpHandler(ActivityBundle activityBundle)
@@ -30,14 +30,17 @@ namespace Flobot.Messages.Handlers
             StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);
             sb.AppendLine($"{ActivityBundle.Caller.Name}, list of your commands is:");
 
-            var permittedHandlers = GetPermittedHandlers();
-            foreach (var handler in permittedHandlers)
-            {
-                var supportedCommands = handler.GetCustomAttribute<MessageAttribute>()?.SupportedCommands;
+            IEnumerable<Type> permittedHandlers = GetPermittedHandlers();
 
-                if (supportedCommands == null)
+            var sortedHandlers = permittedHandlers.Select(x => new { Handler = x, Attribute = x.GetCustomAttribute<MessageAttribute>() });
+
+            foreach (var data in sortedHandlers.OrderBy(x => x.Attribute?.Section).ThenBy(x => x.Attribute?.SupportedCommands?.FirstOrDefault()))
+            {
+                var supportedCommands = data.Handler.GetCustomAttribute<MessageAttribute>()?.SupportedCommands;
+
+                if (supportedCommands == null || !supportedCommands.Any())
                 {
-                    Logger.Warn($"Handler {handler.Name} has no defined supported commands");
+                    Logger.Warn($"Handler {data.Handler.Name} has no defined supported commands");
                     continue;
                 }
 

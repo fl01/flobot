@@ -11,7 +11,7 @@ using Microsoft.Bot.Connector;
 namespace Flobot.Messages.Handlers
 {
     [Permissions(Role.User)]
-    [Message("currency", "curr")]
+    [Message(Section.Default, "currency", "curr")]
     public class CurrencyHandler : MessageHandlerBase
     {
         private const string CurrencyNbuBuySellLineFormat = "NBU : {0}";

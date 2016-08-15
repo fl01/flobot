@@ -11,7 +11,7 @@ using Microsoft.Bot.Connector;
 namespace Flobot.Messages.Handlers
 {
     [Permissions(Role.User)]
-    [Message("fuck", "fk")]
+    [Message(Section.Default, "fuck", "fk")]
     public class FuckHandler : MessageHandlerBase
     {
         private FoaasProxy proxy;
