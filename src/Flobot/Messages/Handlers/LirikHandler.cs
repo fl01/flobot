@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using Flobot.Common;
 using Flobot.Identity;
+using Flobot.Messages.Commands;
 using Microsoft.Bot.Connector;
 
 namespace Flobot.Messages.Handlers
@@ -13,7 +14,7 @@ namespace Flobot.Messages.Handlers
     [Message("lirik", "lrk")]
     public class LirikHandler : MessageHandlerBase
     {
-        private Dictionary<string, string> subCommands;
+        private Dictionary<string, string> imageContainer;
 
         private string ImageFolder
         {
@@ -28,21 +29,6 @@ namespace Flobot.Messages.Handlers
             : base(activityBundle)
         {
             InitializeSubCommands();
-        }
-
-        protected override IEnumerable<Activity> CreateHelpReplies()
-        {
-            StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);
-
-            var keys = subCommands.Select(x => x.Key);
-
-            foreach (var key in keys)
-            {
-                // TODO : read command/subcommand prefixes from settings service
-                sb.AppendLine("!lirik." + key);
-            }
-
-            return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
         }
 
         protected override IEnumerable<Activity> CreateReplies()
@@ -94,11 +80,11 @@ namespace Flobot.Messages.Handlers
 
         private CardImage GetRandomCardImage()
         {
-            int index = new Random().Next(subCommands.Count);
+            int index = new Random().Next(imageContainer.Count);
 
             return new CardImage()
             {
-                Url = ImageFolder + subCommands.ElementAt(index).Value
+                Url = ImageFolder + imageContainer.ElementAt(index).Value
             };
         }
 
@@ -106,7 +92,10 @@ namespace Flobot.Messages.Handlers
         {
             string imageName;
 
-            if (!subCommands.TryGetValue(ActivityBundle.Message.SubCommand, out imageName))
+            ICommandInfo subCommand = SubCommands.Select(x => x.Key)
+                .FirstOrDefault(x => x.Name.Equals(ActivityBundle.Message.SubCommand, StringComparison.CurrentCultureIgnoreCase));
+
+            if (subCommand == null || !imageContainer.TryGetValue(subCommand.Name, out imageName))
             {
                 image = null;
                 return false;
@@ -122,8 +111,61 @@ namespace Flobot.Messages.Handlers
 
         private void InitializeSubCommands()
         {
+            SubCommands = new Dictionary<ICommandInfo, Func<IEnumerable<Activity>>>()
+            {
+                { new ChatCommandInfo("kappa"), CreateReplies },
+                { new ChatCommandInfo("b"), CreateReplies },
+                { new ChatCommandInfo("bb"), CreateReplies },
+                { new ChatCommandInfo("blind"), CreateReplies },
+                { new ChatCommandInfo("c"), CreateReplies },
+                { new ChatCommandInfo("champ"), CreateReplies },
+                { new ChatCommandInfo("clap"), CreateReplies },
+                { new ChatCommandInfo("crash"), CreateReplies },
+                { new ChatCommandInfo("d"), CreateReplies },
+                { new ChatCommandInfo("dj"), CreateReplies },
+                { new ChatCommandInfo("f"), CreateReplies },
+                { new ChatCommandInfo("fat"), CreateReplies },
+                { new ChatCommandInfo("feels"), CreateReplies },
+                { new ChatCommandInfo("gasm"), CreateReplies },
+                { new ChatCommandInfo("good"), CreateReplies },
+                { new ChatCommandInfo("goty"), CreateReplies },
+                { new ChatCommandInfo("great"), CreateReplies },
+                { new ChatCommandInfo("h"), CreateReplies },
+                { new ChatCommandInfo("hold"), CreateReplies },
+                { new ChatCommandInfo("hug"), CreateReplies },
+                { new ChatCommandInfo("hype"), CreateReplies },
+                { new ChatCommandInfo("l"), CreateReplies },
+                { new ChatCommandInfo("lewd"), CreateReplies },
+                { new ChatCommandInfo("loot"), CreateReplies },
+                { new ChatCommandInfo("lul"), CreateReplies },
+                { new ChatCommandInfo("m"), CreateReplies },
+                { new ChatCommandInfo("meow"), CreateReplies },
+                { new ChatCommandInfo("mlg"), CreateReplies },
+                { new ChatCommandInfo("n"), CreateReplies },
+                { new ChatCommandInfo("nice"), CreateReplies },
+                { new ChatCommandInfo("non"), CreateReplies },
+                { new ChatCommandInfo("not"), CreateReplies },
+                { new ChatCommandInfo("o"), CreateReplies },
+                { new ChatCommandInfo("obese"), CreateReplies },
+                { new ChatCommandInfo("ohgod"), CreateReplies },
+                { new ChatCommandInfo("p"), CreateReplies },
+                { new ChatCommandInfo("pool"), CreateReplies },
+                { new ChatCommandInfo("poop"), CreateReplies },
+                { new ChatCommandInfo("puke"), CreateReplies },
+                { new ChatCommandInfo("rekt"), CreateReplies },
+                { new ChatCommandInfo("rip"), CreateReplies },
+                { new ChatCommandInfo("salt"), CreateReplies },
+                { new ChatCommandInfo("scared"), CreateReplies },
+                { new ChatCommandInfo("shucks"), CreateReplies },
+                { new ChatCommandInfo("ten"), CreateReplies },
+                { new ChatCommandInfo("thump"), CreateReplies },
+                { new ChatCommandInfo("truck"), CreateReplies },
+                { new ChatCommandInfo("w"), CreateReplies },
+                { new ChatCommandInfo("wc"), CreateReplies }
+            };
+
             // TODO : get rid of this ASAP
-            subCommands = new Dictionary<string, string>()
+            imageContainer = new Dictionary<string, string>()
             {
                 {"kappa", "lirikAppa.jpg"},
                 {"b", "lirikB.jpg"},

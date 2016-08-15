@@ -40,11 +40,6 @@ namespace Flobot.Messages.Handlers
             return new[] { ActivityBundle.Activity.CreateReply(replyMessage) };
         }
 
-        protected override IEnumerable<Activity> CreateHelpReplies()
-        {
-            return new[] { ActivityBundle.Activity.CreateReply("...") };
-        }
-
         private string GetReplyMessage()
         {
             if (string.IsNullOrEmpty(ActivityBundle.Message.CommandArg))

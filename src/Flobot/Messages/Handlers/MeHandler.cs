@@ -17,11 +17,6 @@ namespace Flobot.Messages.Handlers
         {
         }
 
-        protected override IEnumerable<Activity> CreateHelpReplies()
-        {
-            return new[] { ActivityBundle.Activity.CreateReply("...") };
-        }
-
         protected override IEnumerable<Activity> CreateReplies()
         {
             StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);

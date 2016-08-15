@@ -6,6 +6,8 @@ using Flobot.Common;
 using Flobot.Common.Container;
 using Flobot.Identity;
 using Flobot.Logging;
+using Flobot.Messages.Commands;
+using Flobot.Settings;
 using Microsoft.Bot.Connector;
 
 namespace Flobot.Messages.Handlers
@@ -16,10 +18,16 @@ namespace Flobot.Messages.Handlers
 
         protected ILog Logger { get; private set; }
 
+        protected Dictionary<ICommandInfo, Func<IEnumerable<Activity>>> SubCommands { get; set; }
+
+        protected ISettingsService SettingsService { get; private set; }
+
         public MessageHandlerBase(ActivityBundle activityBundle)
         {
             ActivityBundle = activityBundle;
             Logger = IoC.Container.Resolve<ILoggingService>().GetLogger(this);
+            SubCommands = new Dictionary<ICommandInfo, Func<IEnumerable<Activity>>>();
+            SettingsService = IoC.Container.Resolve<ISettingsService>();
         }
 
         public IEnumerable<Activity> GetReplies()
@@ -53,6 +61,29 @@ namespace Flobot.Messages.Handlers
 
         protected abstract IEnumerable<Activity> CreateReplies();
 
-        protected abstract IEnumerable<Activity> CreateHelpReplies();
+        protected virtual IEnumerable<Activity> CreateHelpReplies()
+        {
+            var permittedSubCommands = GetPermittedSubCommands();
+
+            if (!permittedSubCommands.Any())
+            {
+                return new[] { ActivityBundle.Activity.CreateReply("There are no subcommands available") };
+            }
+
+            StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);
+            sb.AppendLine("List of subcommands:");
+
+            foreach (var keyValuePair in permittedSubCommands)
+            {
+                sb.AppendLine($"{SettingsService.GetSubCommandSeparator()}{keyValuePair.Key.Name}");
+            }
+
+            return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
+        }
+
+        protected IEnumerable<KeyValuePair<ICommandInfo, Func<IEnumerable<Activity>>>> GetPermittedSubCommands()
+        {
+            return SubCommands.Where(x => x.Key.CanExecute(ActivityBundle));
+        }
     }
 }

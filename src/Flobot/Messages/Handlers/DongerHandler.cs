@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Flobot.Common;
 using Flobot.Identity;
+using Flobot.Messages.Commands;
 using Flobot.Messages.Handlers.Donger;
 using Microsoft.Bot.Connector;
 
@@ -31,41 +32,38 @@ namespace Flobot.Messages.Handlers
         public DongerHandler(ActivityBundle activityBundle)
             : base(activityBundle)
         {
+            InitializeSubCommands();
         }
 
         protected override IEnumerable<Activity> CreateReplies()
         {
-            string replyMessage = GetReplyMessage();
-            return new[] { ActivityBundle.Activity.CreateReply(replyMessage) };
-        }
+            var replyKeyValuePair = GetPermittedSubCommands().FirstOrDefault(x => x.Key.Name.Equals(ActivityBundle.Message.SubCommand, StringComparison.CurrentCultureIgnoreCase));
 
-        protected override IEnumerable<Activity> CreateHelpReplies()
-        {
-            return new[] { ActivityBundle.Activity.CreateReply("...") };
-        }
-
-        private string GetReplyMessage()
-        {
-            switch (ActivityBundle.Message.SubCommand)
+            if (replyKeyValuePair.Value == null)
             {
-                case "top":
-                    return GetPopularDongers();
-                case "all":
-                    return GetAllDongers();
-                default:
-                    return GetRandomDonger();
-
+                return GetRandomDonger();
             }
+
+            return replyKeyValuePair.Value();
         }
 
-        private string GetRandomDonger()
+        private void InitializeSubCommands()
+        {
+            SubCommands = new Dictionary<ICommandInfo, Func<IEnumerable<Activity>>>()
+            {
+                {new ChatCommandInfo("top"),  GetPopularDongers},
+                {new ChatCommandInfo("all"),  GetAllDongers}
+            };
+        }
+
+        private IEnumerable<Activity> GetRandomDonger()
         {
             var allDongers = Store.GetAllDongers();
 
-            return allDongers.ElementAt(new Random().Next(allDongers.Count)).Text;
+            return new[] { ActivityBundle.Activity.CreateReply(allDongers.ElementAt(new Random().Next(allDongers.Count)).Text) };
         }
 
-        private string GetPopularDongers()
+        private IEnumerable<Activity> GetPopularDongers()
         {
             StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);
 
@@ -76,10 +74,10 @@ namespace Flobot.Messages.Handlers
                 sb.AppendLine(donger.Text);
             }
 
-            return sb.ToString();
+            return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
         }
 
-        private string GetAllDongers()
+        private IEnumerable<Activity> GetAllDongers()
         {
             StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);
 
@@ -88,7 +86,7 @@ namespace Flobot.Messages.Handlers
                 sb.AppendLine(donger.Text);
             }
 
-            return sb.ToString();
+            return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
         }
     }
 }
