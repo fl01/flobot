@@ -238,6 +238,7 @@
     <Compile Include="Messages\IMessageParser.cs" />
     <Compile Include="Messages\Message.cs" />
     <Compile Include="Messages\RegexMessageParser.cs" />
+    <Compile Include="Messages\Handlers\UtilityHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\ConfigSettings.cs" />
     <Compile Include="Settings\IConfigSettings.cs" />
