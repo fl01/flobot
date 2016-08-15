@@ -233,6 +233,10 @@
     <Compile Include="Messages\Message.cs" />
     <Compile Include="Messages\RegexMessageParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\ConfigSettings.cs" />
+    <Compile Include="Settings\IConfigSettings.cs" />
+    <Compile Include="Settings\ISettingsService.cs" />
+    <Compile Include="Settings\SettingsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
