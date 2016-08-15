@@ -1,4 +1,5 @@
 ﻿using System;
+using Flobot.Identity;
 using Flobot.InversionOfControl;
 using Flobot.Messages;
 using Flobot.Messages.Handlers.Fuck;
@@ -16,7 +17,9 @@ namespace Flobot
                 .Register<ISettingsService, SettingsService>(Lifetime.Singleton)
                 .Register<FoaasProxy>(Lifetime.PerResolve)
                 .Register<GoogleDocProxy>(Lifetime.PerResolve)
-                .Register<IMessageParser, RegexMessageParser>(Lifetime.PerResolve);
+                .Register<IMessageParser, RegexMessageParser>(Lifetime.PerResolve)
+                .Register<IUserStore, UserStore>(Lifetime.PerResolve)
+                .Register<IUserManager, UserManager>(Lifetime.PerResolve);
         }
     }
 }

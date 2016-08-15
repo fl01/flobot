@@ -24,7 +24,7 @@ namespace Flobot
 
         public MessagesController()
         {
-            userManager = new UserManager(new UserStore());
+            userManager = IoC.Container.Resolve<IUserManager>();
             messageParser = IoC.Container.Resolve<IMessageParser>();
             logger = IoC.Container.Resolve<ILoggingService>().GetLogger(this);
         }

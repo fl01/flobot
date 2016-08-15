@@ -15,6 +15,11 @@ namespace Flobot.Identity
             this.userStore = userStore;
         }
 
+        public IEnumerable<User> GetUsers()
+        {
+            return userStore.GetUsers();
+        }
+
         public User RecognizeUser(ChannelAccount account)
         {
             var registeredUser = userStore.GetUsers().FirstOrDefault(u => u.Id.Equals(account.Id));

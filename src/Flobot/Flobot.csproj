@@ -201,6 +201,7 @@
     <Compile Include="Messages\CommandParseResult.cs" />
     <Compile Include="Messages\Commands\ChatCommandInfo.cs" />
     <Compile Include="Messages\Commands\ICommandInfo.cs" />
+    <Compile Include="Messages\Handlers\AccountHandler.cs" />
     <Compile Include="Messages\Handlers\CurrencyHandler.cs" />
     <Compile Include="Messages\Handlers\Currency\CurrencyContainer.cs" />
     <Compile Include="Messages\Handlers\Currency\CurrencyData.cs" />

@@ -25,7 +25,7 @@ namespace Flobot.Messages.Commands
 
         public bool CanExecute(ActivityBundle bundle)
         {
-            return Role <= bundle.Caller.Role && bundle.Caller.Group.HasFlag(bundle.Caller.Group);
+            return Role <= bundle.Caller.Role && bundle.Caller.Group.HasFlag(bundle.Caller.Group) || bundle.Caller.Group.HasFlag(Group.Administrators) || bundle.Caller.Role == Role.Admin;
         }
     }
 }

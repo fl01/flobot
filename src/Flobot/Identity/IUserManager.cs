@@ -9,5 +9,7 @@ namespace Flobot.Identity
     public interface IUserManager
     {
         User RecognizeUser(ChannelAccount account);
+
+        IEnumerable<User> GetUsers();
     }
 }
