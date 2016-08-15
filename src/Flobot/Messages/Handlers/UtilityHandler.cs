@@ -44,7 +44,8 @@ namespace Flobot.Messages.Handlers
                 { new ChatCommandInfo("lower"), GetLowercasedText },
                 { new ChatCommandInfo("guid"), GetGuid },
                 { new ChatCommandInfo("base64"), GetBase64 },
-                { new ChatCommandInfo("base64dec"), GetDecodedBase64 }
+                { new ChatCommandInfo("base64dec"), GetDecodedBase64 },
+                { new ChatCommandInfo("rand"), GetRandomNumber }
             };
         }
 
@@ -123,6 +124,28 @@ namespace Flobot.Messages.Handlers
         private IEnumerable<Activity> GetGuid()
         {
             return new[] { ActivityBundle.Activity.CreateReply(Guid.NewGuid().ToString("D")) };
+        }
+
+        private IEnumerable<Activity> GetRandomNumber()
+        {
+            int maxValue = 0;
+
+            if (!string.IsNullOrEmpty(ActivityBundle.Message.CommandArg) && !int.TryParse(ActivityBundle.Message.CommandArg, out maxValue))
+            {
+                return new[] { ActivityBundle.Activity.CreateReply($"{ActivityBundle.Message.CommandArg} is not a valid number") };
+            }
+
+            int randomValue;
+            if (maxValue > 0)
+            {
+                randomValue = new Random().Next(++maxValue);
+            }
+            else
+            {
+                randomValue = new Random().Next();
+            }
+
+            return new[] { ActivityBundle.Activity.CreateReply(randomValue.ToString()) };
         }
     }
 }
