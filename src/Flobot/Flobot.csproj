@@ -226,6 +226,7 @@
     <Compile Include="Messages\Handlers\MeHandler.cs" />
     <Compile Include="Messages\Handlers\PsychoRaid\GoogleDocProxy.cs" />
     <Compile Include="Messages\Handlers\PsychoRaid\RaidMember.cs" />
+    <Compile Include="Messages\Handlers\VersionHandler.cs" />
     <Compile Include="Messages\IMessageHandlerProvider.cs" />
     <Compile Include="Messages\MessageAttribute.cs" />
     <Compile Include="Messages\Handlers\MessageHandlerBase.cs" />

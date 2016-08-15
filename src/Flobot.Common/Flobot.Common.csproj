@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\Levenshtein.cs" />
+    <Compile Include="AssemblyExtensions.cs" />
     <Compile Include="Container\IoC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

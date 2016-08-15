@@ -10,5 +10,7 @@ namespace Flobot.Settings
         string GetCommandPrefix();
 
         string GetSubCommandSeparator();
+
+        int GetElapsedHoursFromBuildDateRound();
     }
 }
