@@ -85,5 +85,10 @@ namespace Flobot.Messages.Handlers
         {
             return SubCommands.Where(x => x.Key.CanExecute(ActivityBundle));
         }
+
+        protected KeyValuePair<ICommandInfo, Func<IEnumerable<Activity>>> GetPermittedSubCommand(string subCommand)
+        {
+            return GetPermittedSubCommands().FirstOrDefault(c => c.Key.Name.Equals(subCommand, StringComparison.CurrentCultureIgnoreCase));
+        }
     }
 }
