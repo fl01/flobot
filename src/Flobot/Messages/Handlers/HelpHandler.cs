@@ -37,10 +37,12 @@ namespace Flobot.Messages.Handlers
 
                 if (supportedCommands == null)
                 {
+                    Logger.Warn($"Handler {handler.Name} has no defined supported commands");
                     continue;
                 }
-                // TODO : command prefix "!" should be taken from settings service
-                string formattedCommands = string.Join(", ", supportedCommands.Select(x => "!" + x));
+
+                string commandPrefix = SettingsService.GetCommandPrefix();
+                string formattedCommands = string.Join(", ", supportedCommands.Select(commnad => commandPrefix + commnad));
                 sb.AppendLine(formattedCommands);
             }
 
