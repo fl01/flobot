@@ -92,11 +92,13 @@ namespace Flobot.Messages.Handlers
         {
             string imageName;
 
-            ICommandInfo subCommand = SubCommands.Select(x => x.Key)
-                .FirstOrDefault(x => x.Name.Equals(ActivityBundle.Message.SubCommand, StringComparison.CurrentCultureIgnoreCase));
+            ICommandInfo subCommand = GetPermittedSubCommands()
+                .FirstOrDefault(x => x.Key.Name.Equals(ActivityBundle.Message.SubCommand, StringComparison.CurrentCultureIgnoreCase))
+                .Key;
 
             if (subCommand == null || !imageContainer.TryGetValue(subCommand.Name, out imageName))
             {
+                Logger.Debug($"Invalid sub-command {ActivityBundle.Message.SubCommand}");
                 image = null;
                 return false;
             }
