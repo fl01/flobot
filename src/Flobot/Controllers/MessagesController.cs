@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Flobot.Common;
+using Flobot.Common.Container;
 using Flobot.Identity;
 using Flobot.Logging;
 using Flobot.Messages;
@@ -19,13 +20,13 @@ namespace Flobot
     {
         private IUserManager userManager;
         private IMessageParser messageParser;
-        private ILog logger;
+        private readonly ILog logger;
 
         public MessagesController()
         {
             userManager = new UserManager(new UserStore());
-            messageParser = new RegexMessageParser();
-            logger = this.GetLogger();
+            messageParser = IoC.Container.Resolve<IMessageParser>();
+            logger = IoC.Container.Resolve<ILoggingService>().GetLogger(this);
         }
 
         /// <summary>

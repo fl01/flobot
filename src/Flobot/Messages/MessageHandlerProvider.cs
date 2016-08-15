@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Flobot.Common;
+using Flobot.Common.Container;
 using Flobot.Logging;
 using Flobot.Messages.Handlers;
 
@@ -10,12 +11,12 @@ namespace Flobot.Messages
     public class MessageHandlerProvider : IMessageHandlerProvider
     {
         private ActivityBundle activityBundle;
-        private ILog logger;
+        private readonly ILog logger;
 
         public MessageHandlerProvider(ActivityBundle activityBundle)
         {
             this.activityBundle = activityBundle;
-            this.logger = this.GetLogger();
+            this.logger = IoC.Container.Resolve<ILoggingService>().GetLogger(this);
         }
 
         public IMessageHandler GetHandler()

@@ -12,11 +12,11 @@ namespace Flobot.Messages
         private const string CommandPrefix = "!";
         private const string SubCommandDelimeter = ".";
         private readonly string commandPattern = $"^{CommandPrefix}([a-zA-Z0-9]+)([{SubCommandDelimeter}]([a-zA-Z0-9]+))?"; // represents !command.subcommand
-        private ILog logger;
+        private readonly ILog logger;
 
-        public RegexMessageParser()
+        public RegexMessageParser(ILoggingService loggingService)
         {
-            logger = this.GetLogger();
+            logger = loggingService.GetLogger(this);
         }
 
         public Message Parse(string text)

@@ -15,7 +15,7 @@ namespace Flobot.Messages.Handlers.PsychoRaid
     public class GoogleDocProxy
     {
         private string fileName;
-        private ILog logger;
+        private readonly ILog logger;
 
         private string FileName
         {
@@ -34,9 +34,9 @@ namespace Flobot.Messages.Handlers.PsychoRaid
             }
         }
 
-        public GoogleDocProxy()
+        public GoogleDocProxy(ILoggingService loggingService)
         {
-            logger = this.GetLogger();
+            logger = loggingService.GetLogger(this);
         }
 
         public IEnumerable<RaidMember> GetRaidMembers(string name)

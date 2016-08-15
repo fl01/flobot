@@ -9,12 +9,12 @@ namespace Flobot.Messages.Handlers.Fuck
     {
         private List<string> fromReplyLinks;
         private List<string> fromToNameReplyLinks;
-        private ILog logger;
+        private readonly ILog logger;
 
-        public FoaasProxy()
+        public FoaasProxy(ILoggingService loggingService)
         {
+            logger = loggingService.GetLogger(this);
             InitFooasLinks();
-            logger = this.GetLogger();
         }
 
         public string GetRandomFromReply(string from)

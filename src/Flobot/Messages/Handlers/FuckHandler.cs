@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Flobot.Common;
+using Flobot.Common.Container;
 using Flobot.Identity;
 using Flobot.Messages.Handlers.Fuck;
 using Microsoft.Bot.Connector;
@@ -21,7 +22,7 @@ namespace Flobot.Messages.Handlers
             {
                 if (proxy == null)
                 {
-                    proxy = new FoaasProxy();
+                    proxy = IoC.Container.Resolve<FoaasProxy>();
                 }
 
                 return proxy;
