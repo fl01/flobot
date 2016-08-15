@@ -14,6 +14,8 @@ namespace Flobot.Messages.Handlers
 {
     public abstract class MessageHandlerBase : IMessageHandler
     {
+        protected const string UnknownSubCommandError = "Unknown subcommand. Try use /? to see a list of available commands";
+
         protected ActivityBundle ActivityBundle { get; private set; }
 
         protected ILog Logger { get; private set; }

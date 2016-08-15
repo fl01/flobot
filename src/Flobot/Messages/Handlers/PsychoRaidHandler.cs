@@ -5,6 +5,7 @@ using System.Web;
 using Flobot.Common;
 using Flobot.Common.Container;
 using Flobot.Identity;
+using Flobot.Messages.Commands;
 using Flobot.Messages.Handlers.PsychoRaid;
 using Microsoft.Bot.Connector;
 
@@ -29,27 +30,13 @@ namespace Flobot.Messages.Handlers
             }
         }
 
-        private Dictionary<string, Func<IEnumerable<Activity>>> subCommands;
-
         public PsychoRaidHandler(ActivityBundle activityBundle)
             : base(activityBundle)
         {
-            subCommands = new Dictionary<string, Func<IEnumerable<Activity>>>()
+            SubCommands = new Dictionary<ICommandInfo, Func<IEnumerable<Activity>>>()
             {
-                {"all", GetAllMembers }
+                { new ChatCommandInfo("all"), GetAllMembers }
             };
-        }
-
-        protected override IEnumerable<Activity> CreateHelpReplies()
-        {
-            StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);
-
-            foreach (var key in subCommands.Select(x => x.Key))
-            {
-                sb.AppendLine("!PsychoRaid." + key);
-            }
-
-            return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
         }
 
         protected override IEnumerable<Activity> CreateReplies()
@@ -66,14 +53,14 @@ namespace Flobot.Messages.Handlers
 
         private IEnumerable<Activity> GetSubCommandReplies()
         {
-            Func<IEnumerable<Activity>> subCommand;
+            var commandInfo = GetPermittedSubCommand(ActivityBundle.Message.SubCommand);
 
-            if (!subCommands.TryGetValue(ActivityBundle.Message.SubCommand, out subCommand))
+            if (commandInfo.Value == null)
             {
-                return new[] { ActivityBundle.Activity.CreateReply("Unknown subcommand. Try use /? to see a list of available commands") };
+                return new[] { ActivityBundle.Activity.CreateReply(UnknownSubCommandError) };
             }
 
-            return subCommand();
+            return commandInfo.Value();
         }
 
         private IEnumerable<Activity> GetAllMembers()

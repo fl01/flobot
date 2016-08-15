@@ -37,11 +37,16 @@ namespace Flobot.Messages.Handlers
 
         protected override IEnumerable<Activity> CreateReplies()
         {
+            if (string.IsNullOrEmpty(ActivityBundle.Message.SubCommand))
+            {
+                return GetRandomDonger();
+            }
+
             var replyKeyValuePair = GetPermittedSubCommands().FirstOrDefault(x => x.Key.Name.Equals(ActivityBundle.Message.SubCommand, StringComparison.CurrentCultureIgnoreCase));
 
             if (replyKeyValuePair.Value == null)
             {
-                return GetRandomDonger();
+                return new[] { ActivityBundle.Activity.CreateReply(UnknownSubCommandError) };
             }
 
             return replyKeyValuePair.Value();
@@ -51,8 +56,8 @@ namespace Flobot.Messages.Handlers
         {
             SubCommands = new Dictionary<ICommandInfo, Func<IEnumerable<Activity>>>()
             {
-                {new ChatCommandInfo("top"),  GetPopularDongers},
-                {new ChatCommandInfo("all"),  GetAllDongers}
+                { new ChatCommandInfo("top"),  GetPopularDongers },
+                { new ChatCommandInfo("all"),  GetAllDongers }
             };
         }
 
