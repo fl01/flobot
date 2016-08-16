@@ -43,9 +43,6 @@ namespace Flobot.Messages.Handlers
 
         private Activity CreateImageReply(string imageName)
         {
-            Activity imageReply = ActivityBundle.Activity.CreateReply();
-            imageReply.AttachmentLayout = "carousel";
-
             CardImage image;
             if (!TryGetRequestedCardImage(imageName, out image))
             {
@@ -55,9 +52,9 @@ namespace Flobot.Messages.Handlers
             }
 
             ThumbnailCard card = CreateThumbnailCard(ActivityBundle.Message.CommandArg);
-
             card.Images.Add(image);
-            imageReply.Attachments.Add(card.ToAttachment());
+
+            Activity imageReply = CreateThumbnailCardReply(card);
 
             return imageReply;
         }
