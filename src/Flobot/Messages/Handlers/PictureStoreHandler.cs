@@ -109,28 +109,34 @@ namespace Flobot.Messages.Handlers
             return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
         }
 
+        private System.Text.RegularExpressions.Match DetermineUrl()
+        {
+            return System.Text.RegularExpressions.Regex.Match(ActivityBundle.Message.CommandArg, "<a\\s+(?:[^>]*?\\s+)?href=\"([^\"]*)\">[^>]*>", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Compiled, TimeSpan.FromSeconds(5));
+        }
+
         private IEnumerable<Activity> SavePicture()
         {
-            Uri imageUri = null;
-
-            bool urlIsFound = ActivityBundle.Message.CommandArg.Split(' ').Any(i => Uri.TryCreate(i, UriKind.Absolute, out imageUri) && imageUri.Scheme == Uri.UriSchemeHttp);
-            if (!urlIsFound)
+            System.Text.RegularExpressions.Match imageUrlMatch = DetermineUrl();
+            if (!imageUrlMatch.Success)
             {
-                return new[] { ActivityBundle.Activity.CreateReply("Failed to determine image url") };
+                return new[] { ActivityBundle.Activity.CreateReply($"Failed to determine image url") };
             }
 
+            string skypeUrl = imageUrlMatch.Value;
+            string normalizedUrl = imageUrlMatch.Groups[1].Value;
+
+            Uri imageUri = new Uri(normalizedUrl, UriKind.Absolute);
+
             string imageName;
-            int urlPosition = ActivityBundle.Message.CommandArg.IndexOf(imageUri.AbsoluteUri);
+            int urlPosition = ActivityBundle.Message.CommandArg.IndexOf(skypeUrl);
             if (urlPosition == 0)
             {
-                imageName = ActivityBundle.Message.CommandArg.Substring(imageUri.AbsoluteUri.Length).Trim();
+                imageName = ActivityBundle.Message.CommandArg.Substring(skypeUrl.Length).Trim();
             }
             else
             {
                 imageName = ActivityBundle.Message.CommandArg.Substring(0, urlPosition).Trim();
             }
-
-            Debug.Assert(imageUri != null);
 
             AddImageResult saveResult = store.Add(imageName, imageUri);
 
