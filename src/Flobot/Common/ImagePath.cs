@@ -12,14 +12,13 @@ namespace Flobot.Common
         private const string WebPathSlash = @"/";
         private const string PhysicalPathSlash = @"\";
 
-        private string imageName;
         private string imageSubfolder;
 
         public string WebPath
         {
             get
             {
-                return string.Join(WebPathSlash, HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority), RootImageFolder, imageSubfolder, imageName);
+                return string.Join(WebPathSlash, HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority), RootImageFolder, imageSubfolder, FullName);
             }
         }
 
@@ -27,7 +26,7 @@ namespace Flobot.Common
         {
             get
             {
-                return HttpContext.Current.Request.MapPath(string.Join(PhysicalPathSlash, "~", RootImageFolder, imageSubfolder, imageName));
+                return HttpContext.Current.Request.MapPath(string.Join(PhysicalPathSlash, "~", RootImageFolder, imageSubfolder, FullName));
             }
         }
 
@@ -39,9 +38,19 @@ namespace Flobot.Common
             }
         }
 
-        public ImagePath(string imageName, string imageSubfolder)
+        public string FullName { get; private set; }
+
+        public string DisplayName
         {
-            this.imageName = imageName;
+            get
+            {
+                return Path.GetFileNameWithoutExtension(FullName);
+            }
+        }
+
+        public ImagePath(string fullImageName, string imageSubfolder)
+        {
+            FullName = fullImageName;
             this.imageSubfolder = imageSubfolder;
         }
     }

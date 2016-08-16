@@ -10,6 +10,7 @@ namespace Flobot.Identity
     {
         Default = 1,
         PsychoRaid = 2,
-        Administrators = 4
+        PictureStoreCM = 4,
+        Administrators = 2048
     }
 }

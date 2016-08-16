@@ -71,11 +71,11 @@ namespace Flobot.Messages.Handlers
                 // so, let's display text bigger if we can (ᵔ◡ᵔ)
                 if (text.Length <= 26 && text.Split('\n').Length <= 2)
                 {
-                    card.Title = ActivityBundle.Message.CommandArg;
+                    card.Title = text;
                 }
                 else
                 {
-                    card.Text = ActivityBundle.Message.CommandArg;
+                    card.Text = text;
                 }
             }
 
@@ -117,6 +117,20 @@ namespace Flobot.Messages.Handlers
         protected virtual IEnumerable<Activity> GetInvalidSubCommandReply()
         {
             return new[] { ActivityBundle.Activity.CreateReply(UnknownSubCommandError) };
+        }
+
+        protected Activity CreateThumbnailCardReply(ThumbnailCard card)
+        {
+            if (card == null)
+            {
+                throw new ArgumentNullException(nameof(card));
+            }
+
+            Activity imageReply = ActivityBundle.Activity.CreateReply();
+            imageReply.AttachmentLayout = "carousel";
+            imageReply.Attachments.Add(card.ToAttachment());
+
+            return imageReply;
         }
     }
 }

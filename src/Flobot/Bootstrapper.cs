@@ -3,6 +3,7 @@ using Flobot.Identity;
 using Flobot.InversionOfControl;
 using Flobot.Messages;
 using Flobot.Messages.Handlers.Fuck;
+using Flobot.Messages.Handlers.PictureStore;
 using Flobot.Messages.Handlers.PsychoRaid;
 using Flobot.Settings;
 
@@ -19,7 +20,8 @@ namespace Flobot
                 .Register<GoogleDocProxy>(Lifetime.PerResolve)
                 .Register<IMessageParser, RegexMessageParser>(Lifetime.PerResolve)
                 .Register<IUserStore, UserStore>(Lifetime.PerResolve)
-                .Register<IUserManager, UserManager>(Lifetime.PerResolve);
+                .Register<IUserManager, UserManager>(Lifetime.PerResolve)
+                .Register<IPictureStore, LocalPictureStore>(Lifetime.PerResolve);
         }
     }
 }

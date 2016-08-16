@@ -190,8 +190,10 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Common\ActivityBundle.cs" />
     <Compile Include="Common\ImagePath.cs" />
+    <Compile Include="Common\RequestType.cs" />
     <Compile Include="Common\StringBuilderEx.cs" />
     <Compile Include="Common\StringBuilderExMode.cs" />
+    <Compile Include="Common\TempFolder.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -230,6 +232,12 @@
     <Compile Include="Messages\Handlers\IMessageHandler.cs" />
     <Compile Include="Messages\Handlers\LirikHandler.cs" />
     <Compile Include="Messages\Handlers\MeHandler.cs" />
+    <Compile Include="Messages\Handlers\PictureStoreHandler.cs" />
+    <Compile Include="Messages\Handlers\PictureStore\AddImageResult.cs" />
+    <Compile Include="Messages\Handlers\PictureStore\IPictureStore.cs" />
+    <Compile Include="Messages\Handlers\PictureStore\LocalPictureStore.cs" />
+    <Compile Include="Messages\Handlers\PictureStore\PictureStoreStats.cs" />
+    <Compile Include="Messages\Handlers\PictureStore\StreamExtensions.cs" />
     <Compile Include="Messages\Handlers\PsychoRaid\GoogleDocProxy.cs" />
     <Compile Include="Messages\Handlers\PsychoRaid\RaidMember.cs" />
     <Compile Include="Messages\Handlers\VersionHandler.cs" />
@@ -279,7 +287,9 @@
       <Name>Flobot.Logging</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Images\PictureStore\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
