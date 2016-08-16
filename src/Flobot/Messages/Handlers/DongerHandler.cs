@@ -11,7 +11,7 @@ using Microsoft.Bot.Connector;
 namespace Flobot.Messages.Handlers
 {
     [Permissions(Role.User)]
-    [Message(Section.Default, "donger", "dnr")]
+    [Message("(ง'̀-'́)ง raise your dongers (ง'̀-'́)ง", Section.Default, "donger", "dnr")]
     public class DongerHandler : MessageHandlerBase
     {
         private DongerStore store;

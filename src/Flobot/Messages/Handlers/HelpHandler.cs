@@ -11,7 +11,7 @@ using Microsoft.Bot.Connector;
 namespace Flobot.Messages.Handlers
 {
     [Permissions(Role.User)]
-    [Message(Section.Help, "help")]
+    [Message("Get your help today", Section.Help, "help")]
     public class HelpHandler : MessageHandlerBase
     {
         public HelpHandler(ActivityBundle activityBundle)
@@ -29,6 +29,7 @@ namespace Flobot.Messages.Handlers
         {
             StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);
             sb.AppendLine($"{ActivityBundle.Caller.Name}, list of your commands is:");
+            sb.AppendLine();
 
             IEnumerable<Type> permittedHandlers = GetPermittedHandlers();
 
@@ -36,21 +37,23 @@ namespace Flobot.Messages.Handlers
 
             foreach (var data in sortedHandlers.OrderBy(x => x.Attribute?.Section).ThenBy(x => x.Attribute?.SupportedCommands?.FirstOrDefault()))
             {
-                var supportedCommands = data.Handler.GetCustomAttribute<MessageAttribute>()?.SupportedCommands;
+                var messageAttribute = data.Handler.GetCustomAttribute<MessageAttribute>();
 
-                if (supportedCommands == null || !supportedCommands.Any())
+                if (messageAttribute == null || messageAttribute.SupportedCommands == null || !messageAttribute.SupportedCommands.Any())
                 {
                     Logger.Warn($"Handler {data.Handler.Name} has no defined supported commands");
                     continue;
                 }
 
                 string commandPrefix = SettingsService.GetCommandPrefix();
-                string formattedCommands = string.Join(", ", supportedCommands.Select(commnad => commandPrefix + commnad));
-                sb.AppendLine(formattedCommands);
+                string formattedCommands = string.Join(", ", messageAttribute.SupportedCommands.Select(commnad => commandPrefix + commnad));
+                string fullCommandInfo = formattedCommands + " - " + messageAttribute.Description;
+                sb.AppendLine(fullCommandInfo);
             }
 
             if (permittedHandlers.Any())
             {
+                sb.AppendLine();
                 sb.AppendLine($"Also try using '{SettingsService.GetCommandPrefix()}[Command] /?' to see a list of supported subcommands");
             }
 

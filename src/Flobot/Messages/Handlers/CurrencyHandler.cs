@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
 using Flobot.Common;
 using Flobot.Identity;
 using Flobot.Messages.Handlers.Currency;
@@ -11,7 +8,7 @@ using Microsoft.Bot.Connector;
 namespace Flobot.Messages.Handlers
 {
     [Permissions(Role.User)]
-    [Message(Section.Default, "currency", "curr")]
+    [Message("Be in touch with exchange rates", Section.Default, "currency", "curr")]
     public class CurrencyHandler : MessageHandlerBase
     {
         private const string CurrencyNbuBuySellLineFormat = "NBU : {0}";

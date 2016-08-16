@@ -9,7 +9,7 @@ using Microsoft.Bot.Connector;
 namespace Flobot.Messages.Handlers
 {
     [Permissions(Role.User)]
-    [Message(Section.Default, "me")]
+    [Message("Know yourself", Section.Default, "me")]
     public class MeHandler : MessageHandlerBase
     {
         public MeHandler(ActivityBundle activityBundle)

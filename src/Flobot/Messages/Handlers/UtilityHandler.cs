@@ -10,7 +10,7 @@ using Microsoft.Bot.Connector;
 namespace Flobot.Messages.Handlers
 {
     [Permissions(Role.User)]
-    [Message(Section.Default, "utility", "util")]
+    [Message("Some useful stuff here", Section.Default, "utility", "util")]
     public class UtilityHandler : MessageHandlerBase
     {
         public UtilityHandler(ActivityBundle activityBundle)
