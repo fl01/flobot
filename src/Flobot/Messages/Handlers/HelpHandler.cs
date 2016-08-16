@@ -11,7 +11,7 @@ using Microsoft.Bot.Connector;
 namespace Flobot.Messages.Handlers
 {
     [Permissions(Role.User)]
-    [Message("Get your help today", Section.Help, "help")]
+    [Message("get your help today", Section.Help, "help")]
     public class HelpHandler : MessageHandlerBase
     {
         public HelpHandler(ActivityBundle activityBundle)

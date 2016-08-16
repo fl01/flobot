@@ -10,7 +10,7 @@ using Microsoft.Bot.Connector;
 namespace Flobot.Messages.Handlers
 {
     [Permissions(Role.User)]
-    [Message("My version", Section.Default, "version", "ver")]
+    [Message("my version", Section.Default, "version", "ver")]
     public class VersionHandler : MessageHandlerBase
     {
         public VersionHandler(ActivityBundle activityBundle)

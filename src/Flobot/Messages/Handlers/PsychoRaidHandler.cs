@@ -12,7 +12,7 @@ using Microsoft.Bot.Connector;
 namespace Flobot.Messages.Handlers
 {
     [Permissions(Role.User, Group.PsychoRaid)]
-    [Message("Raid helper", Section.Default, "PsychoRaid", "pr")]
+    [Message("raid helper", Section.Default, "PsychoRaid", "pr")]
     public class PsychoRaidHandler : MessageHandlerBase
     {
         private GoogleDocProxy proxy;

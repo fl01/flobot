@@ -12,7 +12,7 @@ using Microsoft.Bot.Connector;
 namespace Flobot.Messages.Handlers
 {
     [Permissions(Role.User)]
-    [Message("Get some life changing advice!", Section.Default, "advice", "adv")]
+    [Message("get some life changing advice!", Section.Default, "advice", "adv")]
     public class AdviceHandler : MessageHandlerBase
     {
         private AdviceProvider adviceProvider;
