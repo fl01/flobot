@@ -159,6 +159,7 @@
     <Content Include="Images\Lirik\lirikNOT.jpg" />
     <Content Include="Images\Lirik\lirikO.jpg" />
     <Content Include="Images\Lirik\lirikOBESE.jpg" />
+    <Content Include="Images\Lirik\lirikOG.jpg" />
     <Content Include="Images\Lirik\lirikOHGOD.jpg" />
     <Content Include="Images\Lirik\lirikP.jpg" />
     <Content Include="Images\Lirik\lirikPOOL.jpg" />
@@ -184,6 +185,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Common\ActivityBundle.cs" />
+    <Compile Include="Common\ImagePath.cs" />
     <Compile Include="Common\StringBuilderEx.cs" />
     <Compile Include="Common\StringBuilderExMode.cs" />
     <Compile Include="Controllers\MessagesController.cs" />

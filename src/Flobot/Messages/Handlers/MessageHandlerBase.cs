@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using Flobot.Common;
@@ -54,11 +55,31 @@ namespace Flobot.Messages.Handlers
 
         protected ThumbnailCard CreateThumbnailCard()
         {
-            return new ThumbnailCard()
+            return CreateThumbnailCard(string.Empty);
+        }
+
+        protected ThumbnailCard CreateThumbnailCard(string text)
+        {
+            var card = new ThumbnailCard()
             {
                 Images = new List<CardImage>()
             };
 
+            if (!string.IsNullOrEmpty(text))
+            {
+                // current version of Skype (7.26.01) wraps thumbnail title if it is longer than 26 symbols or 2 lines
+                // so, let's display text bigger if we can (ᵔ◡ᵔ)
+                if (text.Length <= 26 && text.Split('\n').Length <= 2)
+                {
+                    card.Title = ActivityBundle.Message.CommandArg;
+                }
+                else
+                {
+                    card.Text = ActivityBundle.Message.CommandArg;
+                }
+            }
+
+            return card;
         }
 
         protected abstract IEnumerable<Activity> CreateReplies();
