@@ -113,5 +113,10 @@ namespace Flobot.Messages.Handlers
         {
             return GetPermittedSubCommands().FirstOrDefault(c => c.Key.Name.Equals(subCommand, StringComparison.CurrentCultureIgnoreCase));
         }
+
+        protected virtual IEnumerable<Activity> GetInvalidSubCommandReply()
+        {
+            return new[] { ActivityBundle.Activity.CreateReply(UnknownSubCommandError) };
+        }
     }
 }

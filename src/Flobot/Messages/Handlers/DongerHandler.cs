@@ -46,7 +46,7 @@ namespace Flobot.Messages.Handlers
 
             if (replyKeyValuePair.Value == null)
             {
-                return new[] { ActivityBundle.Activity.CreateReply(UnknownSubCommandError) };
+                return GetInvalidSubCommandReply();
             }
 
             return replyKeyValuePair.Value();

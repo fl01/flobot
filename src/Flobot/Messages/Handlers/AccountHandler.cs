@@ -34,7 +34,7 @@ namespace Flobot.Messages.Handlers
             var subCommand = GetPermittedSubCommand(ActivityBundle.Message.SubCommand);
             if (subCommand.Value == null)
             {
-                return new[] { ActivityBundle.Activity.CreateReply(UnknownSubCommandError) };
+                return GetInvalidSubCommandReply();
             }
 
             return subCommand.Value();

@@ -22,7 +22,7 @@ namespace Flobot.Messages.Handlers
             // we do not have subcommands here, so, let's simply return error message if anything
             if (!string.IsNullOrEmpty(ActivityBundle.Message.SubCommand))
             {
-                return new[] { ActivityBundle.Activity.CreateReply(UnknownSubCommandError) };
+                return GetInvalidSubCommandReply();
             }
 
             Assembly assembly = Assembly.GetExecutingAssembly();
