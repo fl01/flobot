@@ -58,7 +58,6 @@ namespace Flobot.Messages.Handlers.PictureStore
                 return AddImageResult.CreateFailResult("Unable to locate url");
             }
 
-
             string downloadedImage = DownloadImage(imageUrl, normalizedName);
 
             if (string.IsNullOrEmpty(downloadedImage))
