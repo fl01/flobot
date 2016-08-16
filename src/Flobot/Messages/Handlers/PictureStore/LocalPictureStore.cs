@@ -41,17 +41,25 @@ namespace Flobot.Messages.Handlers.PictureStore
 
         public AddImageResult Add(string imageName, Uri imageUrl)
         {
+            string normalizedName = GetNormalizedImageName(imageName);
+
+            if (string.IsNullOrEmpty(normalizedName))
+            {
+                return AddImageResult.CreateFailResult($"Invalid image name");
+            }
+
+            if (GetIsImageExists(normalizedName))
+            {
+                return AddImageResult.CreateFailResult($"Image with name '{normalizedName}' already exists");
+            }
+
             if (!GetIsWebResourceExists(imageUrl))
             {
                 return AddImageResult.CreateFailResult("Unable to locate url");
             }
 
-            if (GetIsImageExists(imageName))
-            {
-                return AddImageResult.CreateFailResult($"Image with name '{imageName}' already exists");
-            }
 
-            string downloadedImage = DownloadImage(imageUrl, imageName);
+            string downloadedImage = DownloadImage(imageUrl, normalizedName);
 
             if (string.IsNullOrEmpty(downloadedImage))
             {
@@ -100,6 +108,11 @@ namespace Flobot.Messages.Handlers.PictureStore
         private bool GetIsImageExists(string imageName)
         {
             return InternalGetAllPictures().Any(i => i.DisplayName.Equals(imageName, StringComparison.CurrentCultureIgnoreCase));
+        }
+
+        private string GetNormalizedImageName(string imageName)
+        {
+            return imageName?.Trim().Split(' ').FirstOrDefault();
         }
 
         private string DownloadImage(Uri imageUrl, string imageName)
