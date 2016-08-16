@@ -21,20 +21,6 @@ namespace Flobot.Settings
             return GetAppKeyValue("CommandPrefix");
         }
 
-        public int GetElapsedHoursFromBuildDateRound()
-        {
-            string rawValue = GetAppKeyValue("ElapsedHoursFromBuildDateRound");
-
-            int round;
-            if (string.IsNullOrEmpty(rawValue) || !int.TryParse(rawValue, out round))
-            {
-                logger.Warn($"Invalid value {rawValue} cannot be parsed to int. Default value will be used instead.");
-                round = 4;
-            }
-
-            return round;
-        }
-
         public string GetSubCommandSeparator()
         {
             return GetAppKeyValue("SubCommandSeparator");

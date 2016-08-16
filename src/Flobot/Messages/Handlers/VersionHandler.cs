@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Web;
 using Flobot.Common;
 using Flobot.Identity;
+using Humanizer;
 using Microsoft.Bot.Connector;
 
 namespace Flobot.Messages.Handlers
@@ -28,9 +27,7 @@ namespace Flobot.Messages.Handlers
 
             Assembly assembly = Assembly.GetExecutingAssembly();
             Version version = assembly.GetName().Version;
-            double elapsedFromBuildDate = Math.Round((DateTime.Now - assembly.GetCompileDate()).TotalHours, SettingsService.GetElapsedHoursFromBuildDateRound());
-
-            return new[] { ActivityBundle.Activity.CreateReply($"My version is {version.ToString()} and I was built {elapsedFromBuildDate} hour(s) ago") };
+            return new[] { ActivityBundle.Activity.CreateReply($"My version is {version.ToString()} and I was built {assembly.GetCompileDate().ToUniversalTime().Humanize()}") };
         }
     }
 }

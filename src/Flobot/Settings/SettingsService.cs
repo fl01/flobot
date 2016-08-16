@@ -22,11 +22,6 @@ namespace Flobot.Settings
             return configSettings.GetCommandPrefix();
         }
 
-        public int GetElapsedHoursFromBuildDateRound()
-        {
-            return configSettings.GetElapsedHoursFromBuildDateRound();
-        }
-
         public string GetSubCommandSeparator()
         {
             return configSettings.GetSubCommandSeparator();
