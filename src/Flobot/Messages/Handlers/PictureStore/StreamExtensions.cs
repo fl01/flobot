@@ -22,7 +22,7 @@ namespace Flobot.Messages.Handlers.PictureStore
         {
             stream.Seek(0, SeekOrigin.Begin);
             StringBuilder builder = new StringBuilder();
-            int largestByteHeader = ImageTypes.Max(img => img.Value.Length);
+            int largestByteHeader = ImageTypes.Max(img => img.Key.Length);
 
             for (int i = 0; i < largestByteHeader; i++)
             {

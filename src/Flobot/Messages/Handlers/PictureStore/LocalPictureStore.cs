@@ -189,6 +189,7 @@ namespace Flobot.Messages.Handlers.PictureStore
 
                     if (!EnsureImage(expectedFile))
                     {
+                        logger.Error($"{imageUrl.AbsoluteUri} is not an image");
                         return null;
                     }
 
