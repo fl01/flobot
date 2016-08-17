@@ -12,7 +12,7 @@ namespace Flobot.Messages.Handlers.PictureStore
     public class LocalPictureStore : IPictureStore
     {
         private const string ImageSubFolder = "PictureStore";
-        private const string ImageExtension = "jpg";
+        private const string ImageExtension = "fps";
         private const int MaxPictures = 10;
         private ILog logger;
 
