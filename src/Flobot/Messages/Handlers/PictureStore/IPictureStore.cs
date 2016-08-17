@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Flobot.Common;
 
 namespace Flobot.Messages.Handlers.PictureStore
@@ -13,5 +11,9 @@ namespace Flobot.Messages.Handlers.PictureStore
         PictureStoreStats GetStats();
 
         AddImageResult Add(string imageName, Uri imageUrl);
+
+        DeleteImageResult Delete(string imageName);
+
+        DeleteImageResult Clear();
     }
 }

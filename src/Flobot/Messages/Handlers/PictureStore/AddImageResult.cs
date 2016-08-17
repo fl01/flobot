@@ -6,25 +6,21 @@ using Flobot.Common;
 
 namespace Flobot.Messages.Handlers.PictureStore
 {
-    public class AddImageResult
+    public class AddImageResult : ActionResult
     {
-        private bool success;
-
         public ImagePath Image { get; private set; }
 
-        public bool Success
+        public override bool Success
         {
             get
             {
-                return success && Image != null && Image.Exists;
+                return base.Success && Image != null && Image.Exists;
             }
-            private set
+            protected set
             {
-                success = value;
+                base.Success = value;
             }
         }
-
-        public string Error { get; private set; }
 
         private AddImageResult()
         {

@@ -148,12 +148,44 @@ namespace Flobot.Messages.Handlers
             return new[] { ActivityBundle.Activity.CreateReply($"Image {saveResult.Image.FullName} has been successfully saved") };
         }
 
+        private IEnumerable<Activity> DeletePicture()
+        {
+            string pictureName = GetRequestedPictureName();
+
+            DeleteImageResult deleteResult = store.Delete(pictureName);
+
+            if (deleteResult.Success)
+            {
+                return new[] { ActivityBundle.Activity.CreateReply($"Image '{pictureName}' has been deleted") };
+            }
+            else
+            {
+                return new[] { ActivityBundle.Activity.CreateReply(deleteResult.Error) };
+            }
+        }
+
+        private IEnumerable<Activity> ClearPictures()
+        {
+            DeleteImageResult result = store.Clear();
+
+            if (result.Success)
+            {
+                return new[] { ActivityBundle.Activity.CreateReply($"Store has been cleared out") };
+            }
+            else
+            {
+                return new[] { ActivityBundle.Activity.CreateReply($"Failed to clear the store. Error message: {result.Error}") };
+            }
+        }
+
         private void InitializeSubCommands()
         {
             SubCommands = new Dictionary<ICommandInfo, Func<IEnumerable<Activity>>>()
             {
                 { new ChatCommandInfo("all"), GetPicturesList },
                 { new ChatCommandInfo("add", Group.PictureStoreCM), SavePicture },
+                { new ChatCommandInfo("delete", Group.PictureStoreCM), DeletePicture },
+                { new ChatCommandInfo("clear", Group.PictureStoreCM), ClearPictures },
                 { new ChatCommandInfo("stats"), GetPictureStoreStats },
                 { new ChatCommandInfo("get"), GetExactPicture }
             };

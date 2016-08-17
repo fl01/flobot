@@ -233,7 +233,9 @@
     <Compile Include="Messages\Handlers\LirikHandler.cs" />
     <Compile Include="Messages\Handlers\MeHandler.cs" />
     <Compile Include="Messages\Handlers\PictureStoreHandler.cs" />
+    <Compile Include="Messages\Handlers\PictureStore\ActionResult.cs" />
     <Compile Include="Messages\Handlers\PictureStore\AddImageResult.cs" />
+    <Compile Include="Messages\Handlers\PictureStore\DeleteImageResult.cs" />
     <Compile Include="Messages\Handlers\PictureStore\IPictureStore.cs" />
     <Compile Include="Messages\Handlers\PictureStore\LocalPictureStore.cs" />
     <Compile Include="Messages\Handlers\PictureStore\PictureStoreStats.cs" />

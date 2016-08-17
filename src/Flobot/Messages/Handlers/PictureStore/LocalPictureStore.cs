@@ -71,6 +71,66 @@ namespace Flobot.Messages.Handlers.PictureStore
             return AddImageResult.CreateSuccessResult(imagePath);
         }
 
+        public DeleteImageResult Delete(string imageName)
+        {
+            ImagePath requestedImage = InternalGetAllPictures().FirstOrDefault(i => i.DisplayName.Equals(imageName, StringComparison.CurrentCultureIgnoreCase));
+
+            if (requestedImage == null)
+            {
+                DeleteImageResult.CreateFailResult($"Image '{imageName}' was not found");
+            }
+
+            bool deleteResult = DeleteImage(requestedImage);
+
+            if (deleteResult)
+            {
+                return DeleteImageResult.CreateSuccessResult();
+            }
+            else
+            {
+                return DeleteImageResult.CreateFailResult($"Unable to delete image '{imageName}'");
+            }
+        }
+
+        public DeleteImageResult Clear()
+        {
+            IEnumerable<ImagePath> allImages = InternalGetAllPictures();
+
+            int imagesDeleted = 0;
+
+            foreach (ImagePath image in allImages)
+            {
+                bool deleteResult = DeleteImage(image);
+                if (deleteResult)
+                {
+                    imagesDeleted++;
+                }
+            }
+
+            if (imagesDeleted == allImages.Count())
+            {
+                return DeleteImageResult.CreateSuccessResult();
+            }
+            else
+            {
+                return DeleteImageResult.CreateFailResult($"Only {imagesDeleted} image(s) out of {allImages.Count()} have been deleted");
+            }
+        }
+
+        private bool DeleteImage(ImagePath image)
+        {
+            try
+            {
+                File.Delete(image.PhysicalPath);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                return false;
+            }
+        }
+
         private List<ImagePath> InternalGetAllPictures()
         {
             try
