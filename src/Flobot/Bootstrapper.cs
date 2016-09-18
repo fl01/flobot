@@ -6,6 +6,8 @@ using Flobot.Messages.Handlers.Fuck;
 using Flobot.Messages.Handlers.PictureStore;
 using Flobot.Messages.Handlers.PsychoRaid;
 using Flobot.Settings;
+using Flobot.Messages.Handlers.ExternalHandler;
+using Flobot.Common;
 
 namespace Flobot
 {
@@ -21,7 +23,9 @@ namespace Flobot
                 .Register<IMessageParser, RegexMessageParser>(Lifetime.PerResolve)
                 .Register<IUserStore, UserStore>(Lifetime.PerResolve)
                 .Register<IUserManager, UserManager>(Lifetime.PerResolve)
-                .Register<IPictureStore, LocalPictureStore>(Lifetime.PerResolve);
+                .Register<IPictureStore, LocalPictureStore>(Lifetime.PerResolve)
+                .Register<IExternalSource, RestfulSource>(nameof(RestfulSource), Lifetime.PerResolve)
+                .Register<HttpClient>(Lifetime.PerResolve);
         }
     }
 }

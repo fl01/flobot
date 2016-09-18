@@ -5,6 +5,8 @@ using Flobot.Common;
 using Flobot.Common.Container;
 using Flobot.Logging;
 using Flobot.Messages.Handlers;
+using Flobot.Messages.Handlers.ExternalHandler;
+using Flobot.Settings;
 
 namespace Flobot.Messages
 {
@@ -12,11 +14,13 @@ namespace Flobot.Messages
     {
         private ActivityBundle activityBundle;
         private readonly ILog logger;
+        private ISettingsService settingsService;
 
         public MessageHandlerProvider(ActivityBundle activityBundle)
         {
             this.activityBundle = activityBundle;
             this.logger = IoC.Container.Resolve<ILoggingService>().GetLogger(this);
+            this.settingsService = IoC.Container.Resolve<ISettingsService>();
         }
 
         public IMessageHandler GetHandler()
@@ -38,12 +42,25 @@ namespace Flobot.Messages
                     return null;
                 }
 
-                return Activator.CreateInstance(matchedHandlerType, activityBundle) as IMessageHandler;
+                return CreateHandler(matchedHandlerType, activityBundle);
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
                 return null;
+            }
+        }
+
+        private IMessageHandler CreateHandler(Type type, ActivityBundle bundle)
+        {
+            if (typeof(ExternalHandlerBase).IsAssignableFrom(type))
+            {
+                IExternalSource source = IoC.Container.Resolve<IExternalSource>(nameof(RestfulSource));
+                return Activator.CreateInstance(type, source, activityBundle) as IMessageHandler;
+            }
+            else
+            {
+                return Activator.CreateInstance(type, activityBundle) as IMessageHandler;
             }
         }
 

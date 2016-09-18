@@ -26,6 +26,11 @@ namespace Flobot.Settings
             return GetAppKeyValue("SubCommandSeparator");
         }
 
+        public string GetGolangExternalHandlerHost()
+        {
+            return GetAppKeyValue("GolangExternalHandlerHost");
+        }
+
         private string GetAppKeyValue(string appkey)
         {
             try

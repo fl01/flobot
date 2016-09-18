@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Flobot.Logging;
 
 namespace Flobot.Settings
@@ -20,6 +17,14 @@ namespace Flobot.Settings
         public string GetCommandPrefix()
         {
             return configSettings.GetCommandPrefix();
+        }
+
+        public ExternalConnectionDataDTO GetGolangConnectionData()
+        {
+            return new ExternalConnectionDataDTO()
+            {
+                Url = new Uri(configSettings.GetGolangExternalHandlerHost())
+            };
         }
 
         public string GetSubCommandSeparator()
