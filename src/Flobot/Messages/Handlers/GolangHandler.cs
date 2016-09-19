@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Flobot.Common;
+using Flobot.Common.ExternalServices;
 using Flobot.Identity;
 using Flobot.Messages.Handlers.ExternalHandler;
 using Flobot.Settings;
@@ -16,13 +18,6 @@ namespace Flobot.Messages.Handlers
         {
             ExternalConnectionDataDTO connectionData = SettingsService.GetGolangConnectionData();
             source.SetExternalConnectionData(connectionData);
-        }
-
-        protected override IEnumerable<Activity> GetExternalReply()
-        {
-            string reply = Source.GetReplyMessage(ActivityBundle);
-
-            return new[] { ActivityBundle.Activity.CreateReply(reply) };
         }
     }
 }

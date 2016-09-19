@@ -45,6 +45,8 @@
     <Compile Include="Algorithms\Levenshtein.cs" />
     <Compile Include="AssemblyExtensions.cs" />
     <Compile Include="Container\IoC.cs" />
+    <Compile Include="ExternalServices\ExternalReply.cs" />
+    <Compile Include="ExternalServices\ReplyType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

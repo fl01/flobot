@@ -119,6 +119,21 @@ namespace Flobot.Messages.Handlers
             return new[] { ActivityBundle.Activity.CreateReply(UnknownSubCommandError) };
         }
 
+        protected virtual IEnumerable<Activity> CreateSingleReplyCollection(string text)
+        {
+            return new[] { CreateSingleReply(text) };
+        }
+
+        protected virtual Activity CreateSingleReply(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+
+            return ActivityBundle.Activity.CreateReply(text);
+        }
+
         protected Activity CreateThumbnailCardReply(ThumbnailCard card)
         {
             if (card == null)
