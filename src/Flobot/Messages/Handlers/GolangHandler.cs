@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Flobot.Common;
-using Flobot.Common.ExternalServices;
+﻿using Flobot.Common;
+using Flobot.Common.DTO;
 using Flobot.Identity;
 using Flobot.Messages.Handlers.ExternalHandler;
-using Flobot.Settings;
-using Microsoft.Bot.Connector;
 
 namespace Flobot.Messages.Handlers
 {

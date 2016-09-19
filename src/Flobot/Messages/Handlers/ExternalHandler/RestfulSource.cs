@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Flobot.Common;
 using Flobot.Common.Container;
+using Flobot.Common.DTO;
 using Flobot.Common.ExternalServices;
-using Flobot.Settings;
+using Flobot.Common.Net;
 using Newtonsoft.Json;
 
 namespace Flobot.Messages.Handlers.ExternalHandler

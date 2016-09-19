@@ -1,4 +1,6 @@
-﻿namespace Flobot.Settings
+﻿using Flobot.Common.DTO;
+
+namespace Flobot.Settings
 {
     public interface ISettingsService
     {

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Flobot.Common;
+using Flobot.Common.Container;
+using Flobot.Common.Net;
 using Flobot.Logging;
 
 namespace Flobot.Messages.Handlers.Fuck
@@ -43,11 +45,8 @@ namespace Flobot.Messages.Handlers.Fuck
         {
             try
             {
-                using (SimpleJsonClient wc = new SimpleJsonClient())
-                {
-                    FoaasResponse response = wc.GetJsonObject<FoaasResponse>(url);
-                    return response;
-                }
+                var httpClient = IoC.Container.Resolve<HttpClient>();
+                return httpClient.GetJsonObject<FoaasResponse>(url);
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using Flobot.Common.DTO;
 using Flobot.Logging;
 
 namespace Flobot.Settings

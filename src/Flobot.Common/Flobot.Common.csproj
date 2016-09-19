@@ -33,6 +33,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,8 +49,10 @@
     <Compile Include="Algorithms\Levenshtein.cs" />
     <Compile Include="AssemblyExtensions.cs" />
     <Compile Include="Container\IoC.cs" />
+    <Compile Include="DTO\ExternalConnectionDataDTO.cs" />
     <Compile Include="ExternalServices\ExternalReply.cs" />
     <Compile Include="ExternalServices\ReplyType.cs" />
+    <Compile Include="Net\HttpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +64,9 @@
       <Project>{26ae627c-34c0-4da5-95bc-9e4c17c159c0}</Project>
       <Name>Flobot.Logging</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

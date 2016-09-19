@@ -238,7 +238,7 @@ namespace Flobot.Messages.Handlers.PictureStore
             try
             {
                 var request = (HttpWebRequest)WebRequest.Create(resourceUrl);
-                request.Method = RequestType.Head.ToString();
+                request.Method = WebRequestMethods.Http.Head;
                 request.Timeout = (int)TimeSpan.FromSeconds(10).TotalMilliseconds;
                 var response = (HttpWebResponse)request.GetResponse();
                 return response.StatusCode == HttpStatusCode.OK;

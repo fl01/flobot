@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Flobot.Common;
+using Flobot.Common.Container;
+using Flobot.Common.Net;
 
 namespace Flobot.Messages.Handlers.Currency
 {
@@ -18,13 +20,9 @@ namespace Flobot.Messages.Handlers.Currency
 
         public CurrencyContainer GetCurrencyInfo(DateTime date)
         {
-            using (SimpleJsonClient jsonClient = new SimpleJsonClient())
-            {
-                string url = Url + date.ToString(RequestDateFormat);
-                CurrencyContainer currency = jsonClient.GetJsonObject<CurrencyContainer>(url);
-
-                return currency;
-            }
+            var httpClient = IoC.Container.Resolve<HttpClient>();
+            Uri url = new Uri(Url + date.ToString(RequestDateFormat));
+            return httpClient.GetJsonObject<CurrencyContainer>(url);
         }
     }
 }

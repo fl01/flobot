@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using Flobot.Common;
+using Flobot.Common.Container;
+using Flobot.Common.Net;
 using Newtonsoft.Json;
 
 namespace Flobot.Messages.Handlers.Advice
@@ -14,12 +16,9 @@ namespace Flobot.Messages.Handlers.Advice
         {
             try
             {
-                using (SimpleJsonClient jsonClient = new SimpleJsonClient())
-                {
-                    AdviceResponse result = jsonClient.GetJsonObject<AdviceResponse>("http://fucking-great-advice.ru/api/random");
-
-                    return result.Text.Replace("&nbsp;", " ").Replace("&#151;", "-");
-                }
+                var httpClient = IoC.Container.Resolve<HttpClient>();
+                AdviceResponse result = httpClient.GetJsonObject<AdviceResponse>(new Uri("http://fucking-great-advice.ru/api/random"));
+                return result.Text.Replace("&nbsp;", " ").Replace("&#151;", "-");
             }
             catch (Exception)
             {

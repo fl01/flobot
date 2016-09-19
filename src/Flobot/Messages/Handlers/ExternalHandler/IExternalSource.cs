@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Flobot.Common;
+using Flobot.Common.DTO;
 using Flobot.Common.ExternalServices;
-using Flobot.Settings;
 
 namespace Flobot.Messages.Handlers.ExternalHandler
 {

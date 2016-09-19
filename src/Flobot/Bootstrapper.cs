@@ -8,6 +8,7 @@ using Flobot.Messages.Handlers.PsychoRaid;
 using Flobot.Settings;
 using Flobot.Messages.Handlers.ExternalHandler;
 using Flobot.Common;
+using Flobot.Common.Net;
 
 namespace Flobot
 {
