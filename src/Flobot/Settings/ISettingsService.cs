@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Flobot.Settings
+﻿namespace Flobot.Settings
 {
     public interface ISettingsService
     {
         string GetCommandPrefix();
 
         string GetSubCommandSeparator();
+
+        ExternalConnectionDataDTO GetGolangConnectionData();
     }
 }
