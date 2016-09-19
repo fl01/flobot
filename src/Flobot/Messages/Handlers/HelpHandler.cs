@@ -22,7 +22,7 @@ namespace Flobot.Messages.Handlers
         protected override IEnumerable<Activity> CreateReplies()
         {
             var replyString = GetReplyMessage();
-            return new[] { ActivityBundle.Activity.CreateReply(replyString) };
+            return CreateSingleReplyCollection(replyString);
         }
 
         private string GetReplyMessage()

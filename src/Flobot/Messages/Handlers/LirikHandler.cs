@@ -32,7 +32,7 @@ namespace Flobot.Messages.Handlers
             if (commandInfo.Value == null)
             {
                 string failMessage = $"{ActivityBundle.Caller.Name}, I've failed to find requested image, however, have a look at this one!";
-                var failMessageReply = ActivityBundle.Activity.CreateReply(failMessage);
+                var failMessageReply = CreateSingleReply(failMessage);
                 var randomImageReply = GetRandomImageReply();
 
                 return new[] { failMessageReply }.Concat(randomImageReply);
@@ -48,7 +48,7 @@ namespace Flobot.Messages.Handlers
             {
                 string errorMessage = $"Image {imageName} is missing";
                 Logger.Error(errorMessage);
-                return ActivityBundle.Activity.CreateReply(errorMessage);
+                return CreateSingleReply(errorMessage);
             }
 
             ThumbnailCard card = CreateThumbnailCard(ActivityBundle.Message.CommandArg);
@@ -62,7 +62,9 @@ namespace Flobot.Messages.Handlers
         private IEnumerable<Activity> GetRandomImageReply()
         {
             var allImageReplies = GetPermittedSubCommands();
-            return allImageReplies.ElementAt(new Random().Next(allImageReplies.Count())).Value();
+            return allImageReplies
+                .ElementAt(new Random().Next(allImageReplies.Count()))
+                .Value();
         }
 
         private bool TryGetRequestedCardImage(string imageName, out CardImage image)

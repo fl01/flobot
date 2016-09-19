@@ -74,21 +74,21 @@ namespace Flobot.Messages.Handlers
                 sb.AppendLine($"Member: {member.Name}, Sum: {member.Sum}");
             }
 
-            return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
+            return CreateSingleReplyCollection(sb.ToString());
         }
 
         private IEnumerable<Activity> GetCommandReplies()
         {
             if (string.IsNullOrEmpty(ActivityBundle.Message.CommandArg))
             {
-                return new[] { ActivityBundle.Activity.CreateReply("Character name is required.") };
+                return CreateSingleReplyCollection("Character name is required.");
             }
 
             IEnumerable<RaidMember> members = Proxy.GetRaidMembers(ActivityBundle.Message.CommandArg);
 
             if (members == null || !members.Any())
             {
-                return new[] { ActivityBundle.Activity.CreateReply($"Member '{ActivityBundle.Message.CommandArg}' not found.") };
+                return CreateSingleReplyCollection($"Member '{ActivityBundle.Message.CommandArg}' not found.");
             }
 
             StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);
@@ -98,7 +98,7 @@ namespace Flobot.Messages.Handlers
                 sb.AppendLine($"Member: {member.Name}, Sum: {member.Sum}");
             }
 
-            return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
+            return CreateSingleReplyCollection(sb.ToString());
         }
     }
 }

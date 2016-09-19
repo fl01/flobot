@@ -62,7 +62,7 @@ namespace Flobot.Messages.Handlers
                 reply = ActivityBundle.Message.CommandArg.ToUpper();
             }
 
-            return new[] { ActivityBundle.Activity.CreateReply(reply) };
+            return CreateSingleReplyCollection(reply);
         }
 
         private IEnumerable<Activity> GetLowercasedText()
@@ -78,7 +78,7 @@ namespace Flobot.Messages.Handlers
                 reply = ActivityBundle.Message.CommandArg.ToLower();
             }
 
-            return new[] { ActivityBundle.Activity.CreateReply(reply) };
+            return CreateSingleReplyCollection(reply);
         }
 
         private IEnumerable<Activity> GetBase64()
@@ -94,7 +94,7 @@ namespace Flobot.Messages.Handlers
                 reply = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(ActivityBundle.Message.CommandArg));
             }
 
-            return new[] { ActivityBundle.Activity.CreateReply(reply) };
+            return CreateSingleReplyCollection(reply);
         }
 
         private IEnumerable<Activity> GetDecodedBase64()
@@ -118,12 +118,12 @@ namespace Flobot.Messages.Handlers
                 }
             }
 
-            return new[] { ActivityBundle.Activity.CreateReply(reply) };
+            return CreateSingleReplyCollection(reply);
         }
 
         private IEnumerable<Activity> GetGuid()
         {
-            return new[] { ActivityBundle.Activity.CreateReply(Guid.NewGuid().ToString("D")) };
+            return CreateSingleReplyCollection(Guid.NewGuid().ToString("D"));
         }
 
         private IEnumerable<Activity> GetRandomNumber()
@@ -132,7 +132,7 @@ namespace Flobot.Messages.Handlers
 
             if (!string.IsNullOrEmpty(ActivityBundle.Message.CommandArg) && !int.TryParse(ActivityBundle.Message.CommandArg, out maxValue))
             {
-                return new[] { ActivityBundle.Activity.CreateReply($"{ActivityBundle.Message.CommandArg} is not a valid number") };
+                return CreateSingleReplyCollection($"{ActivityBundle.Message.CommandArg} is not a valid number");
             }
 
             int randomValue;
@@ -145,7 +145,7 @@ namespace Flobot.Messages.Handlers
                 randomValue = new Random().Next();
             }
 
-            return new[] { ActivityBundle.Activity.CreateReply(randomValue.ToString()) };
+            return CreateSingleReplyCollection(randomValue.ToString());
         }
     }
 }

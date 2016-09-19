@@ -42,7 +42,8 @@ namespace Flobot.Messages.Handlers
                 return GetRandomDonger();
             }
 
-            var replyKeyValuePair = GetPermittedSubCommands().FirstOrDefault(x => x.Key.Name.Equals(ActivityBundle.Message.SubCommand, StringComparison.CurrentCultureIgnoreCase));
+            var replyKeyValuePair = GetPermittedSubCommands()
+                .FirstOrDefault(x => x.Key.Name.Equals(ActivityBundle.Message.SubCommand, StringComparison.CurrentCultureIgnoreCase));
 
             if (replyKeyValuePair.Value == null)
             {
@@ -65,7 +66,8 @@ namespace Flobot.Messages.Handlers
         {
             var allDongers = Store.GetAllDongers();
 
-            return new[] { ActivityBundle.Activity.CreateReply(allDongers.ElementAt(new Random().Next(allDongers.Count)).Text) };
+            string randomDonger = allDongers.ElementAt(new Random().Next(allDongers.Count)).Text;
+            return CreateSingleReplyCollection(randomDonger);
         }
 
         private IEnumerable<Activity> GetPopularDongers()
@@ -79,7 +81,7 @@ namespace Flobot.Messages.Handlers
                 sb.AppendLine(donger.Text);
             }
 
-            return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
+            return CreateSingleReplyCollection(sb.ToString());
         }
 
         private IEnumerable<Activity> GetAllDongers()
@@ -91,7 +93,7 @@ namespace Flobot.Messages.Handlers
                 sb.AppendLine(donger.Text);
             }
 
-            return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
+            return CreateSingleReplyCollection(sb.ToString());
         }
     }
 }

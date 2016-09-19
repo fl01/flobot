@@ -49,7 +49,7 @@ namespace Flobot.Messages.Handlers
             catch (Exception e)
             {
                 Logger.Error(e);
-                return new[] { ActivityBundle.Activity.CreateReply("Internal error") };
+                return CreateSingleReplyCollection("Internal error");
             }
         }
 
@@ -90,7 +90,7 @@ namespace Flobot.Messages.Handlers
 
             if (!permittedSubCommands.Any())
             {
-                return new[] { ActivityBundle.Activity.CreateReply("There are no subcommands available") };
+                return CreateSingleReplyCollection("There are no subcommands available");
             }
 
             StringBuilderEx sb = new StringBuilderEx(StringBuilderExMode.Skype);
@@ -101,7 +101,7 @@ namespace Flobot.Messages.Handlers
                 sb.AppendLine($"{SettingsService.GetSubCommandSeparator()}{keyValuePair.Key.Name}");
             }
 
-            return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
+            return CreateSingleReplyCollection(sb.ToString());
         }
 
         protected IEnumerable<KeyValuePair<ICommandInfo, Func<IEnumerable<Activity>>>> GetPermittedSubCommands()
@@ -116,7 +116,7 @@ namespace Flobot.Messages.Handlers
 
         protected virtual IEnumerable<Activity> GetInvalidSubCommandReply()
         {
-            return new[] { ActivityBundle.Activity.CreateReply(UnknownSubCommandError) };
+            return CreateSingleReplyCollection(UnknownSubCommandError);
         }
 
         protected virtual IEnumerable<Activity> CreateSingleReplyCollection(string text)
@@ -126,7 +126,7 @@ namespace Flobot.Messages.Handlers
 
         protected virtual Activity CreateSingleReply(string text)
         {
-            if (string.IsNullOrEmpty(text))
+            if (text == null)
             {
                 throw new ArgumentNullException(nameof(text));
             }
@@ -141,7 +141,7 @@ namespace Flobot.Messages.Handlers
                 throw new ArgumentNullException(nameof(card));
             }
 
-            Activity imageReply = ActivityBundle.Activity.CreateReply();
+            Activity imageReply = CreateSingleReply(string.Empty);
             imageReply.AttachmentLayout = "carousel";
             imageReply.Attachments.Add(card.ToAttachment());
 

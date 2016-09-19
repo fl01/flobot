@@ -26,7 +26,7 @@ namespace Flobot.Messages.Handlers
         protected override IEnumerable<Activity> CreateReplies()
         {
             string replyMessage = GetReplyMessage();
-            return new[] { ActivityBundle.Activity.CreateReply(replyMessage) };
+            return CreateSingleReplyCollection(replyMessage);
         }
 
         private string GetReplyMessage()

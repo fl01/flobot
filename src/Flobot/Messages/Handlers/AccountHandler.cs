@@ -52,7 +52,7 @@ namespace Flobot.Messages.Handlers
 
             sb.AppendLine($"Total users: {users.Count()}");
 
-            return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
+            return CreateSingleReplyCollection(sb.ToString());
         }
 
         private void InitializeSubCommands()

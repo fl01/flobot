@@ -47,7 +47,7 @@ namespace Flobot.Messages.Handlers
         {
             if (string.IsNullOrEmpty(ActivityBundle.Message.CommandArg))
             {
-                return new[] { ActivityBundle.Activity.CreateReply($"{ActivityBundle.Caller.Name}, usage: [image name] [optional text]") };
+                return CreateSingleReplyCollection($"{ActivityBundle.Caller.Name}, usage: [image name] [optional text]");
             }
 
             string pictureName = GetRequestedPictureName();
@@ -56,7 +56,7 @@ namespace Flobot.Messages.Handlers
 
             if (requestedImage == null)
             {
-                return new[] { ActivityBundle.Activity.CreateReply($"Picture '{pictureName}' not found") };
+                return CreateSingleReplyCollection($"Picture '{pictureName}' not found");
             }
 
             string cardText = GetRequestedPictureText();
@@ -85,7 +85,7 @@ namespace Flobot.Messages.Handlers
 
             if (!allPictures.Any())
             {
-                return new[] { ActivityBundle.Activity.CreateReply("Store is empty") };
+                return CreateSingleReplyCollection("Store is empty");
             }
 
             for (int i = 0; i < allPictures.Count; i++)
@@ -93,7 +93,7 @@ namespace Flobot.Messages.Handlers
                 sb.AppendLine($@"\#{i} {allPictures[i].DisplayName}");
             }
 
-            return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
+            return CreateSingleReplyCollection(sb.ToString());
         }
 
         private IEnumerable<Activity> GetPictureStoreStats()
@@ -106,7 +106,7 @@ namespace Flobot.Messages.Handlers
             sb.AppendLine($"Max Pictures Number: {stats.MaxPicturesLoad}");
             sb.AppendLine($"Store is full on {stats.StoreLoadPercentage.ToString("0.00")}%");
 
-            return new[] { ActivityBundle.Activity.CreateReply(sb.ToString()) };
+            return CreateSingleReplyCollection(sb.ToString());
         }
 
         private System.Text.RegularExpressions.Match DetermineUrl()
@@ -119,7 +119,7 @@ namespace Flobot.Messages.Handlers
             System.Text.RegularExpressions.Match imageUrlMatch = DetermineUrl();
             if (!imageUrlMatch.Success)
             {
-                return new[] { ActivityBundle.Activity.CreateReply($"Failed to determine image url") };
+                return CreateSingleReplyCollection("Failed to determine image url");
             }
 
             string skypeUrl = imageUrlMatch.Value;
@@ -142,10 +142,10 @@ namespace Flobot.Messages.Handlers
 
             if (saveResult == null || !saveResult.Success)
             {
-                return new[] { ActivityBundle.Activity.CreateReply($"Image was not saved. Error: {saveResult.Error}") };
+                return CreateSingleReplyCollection($"Image was not saved. Error: {saveResult.Error}");
             }
 
-            return new[] { ActivityBundle.Activity.CreateReply($"Image {saveResult.Image.FullName} has been successfully saved") };
+            return CreateSingleReplyCollection($"Image {saveResult.Image.FullName} has been successfully saved");
         }
 
         private IEnumerable<Activity> DeletePicture()
@@ -156,11 +156,11 @@ namespace Flobot.Messages.Handlers
 
             if (deleteResult.Success)
             {
-                return new[] { ActivityBundle.Activity.CreateReply($"Image '{pictureName}' has been deleted") };
+                return CreateSingleReplyCollection($"Image '{pictureName}' has been deleted");
             }
             else
             {
-                return new[] { ActivityBundle.Activity.CreateReply(deleteResult.Error) };
+                return CreateSingleReplyCollection(deleteResult.Error);
             }
         }
 
@@ -170,11 +170,11 @@ namespace Flobot.Messages.Handlers
 
             if (result.Success)
             {
-                return new[] { ActivityBundle.Activity.CreateReply($"Store has been cleared out") };
+                return CreateSingleReplyCollection("Store has been cleared out");
             }
             else
             {
-                return new[] { ActivityBundle.Activity.CreateReply($"Failed to clear the store. Error message: {result.Error}") };
+                return CreateSingleReplyCollection($"Failed to clear the store. Error message: {result.Error}");
             }
         }
 

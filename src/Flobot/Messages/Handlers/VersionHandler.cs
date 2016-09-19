@@ -27,7 +27,7 @@ namespace Flobot.Messages.Handlers
 
             Assembly assembly = Assembly.GetExecutingAssembly();
             Version version = assembly.GetName().Version;
-            return new[] { ActivityBundle.Activity.CreateReply($"My version is {version.ToString()} and I was built {assembly.GetCompileDate().ToUniversalTime().Humanize()}") };
+            return CreateSingleReplyCollection($"My version is {version.ToString()} and I was built {assembly.GetCompileDate().ToUniversalTime().Humanize()}");
         }
     }
 }

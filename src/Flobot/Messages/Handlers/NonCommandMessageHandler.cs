@@ -20,14 +20,14 @@ namespace Flobot.Messages.Handlers
 
         protected override IEnumerable<Activity> CreateHelpReplies()
         {
-            return new[] { ActivityBundle.Activity.CreateReply("...") };
+            return CreateSingleReplyCollection("...");
         }
 
         protected override IEnumerable<Activity> CreateReplies()
         {
             string reply = eliza.ProcessInput(ActivityBundle.Message.RawText);
 
-            return new[] { ActivityBundle.Activity.CreateReply(reply) };
+            return CreateSingleReplyCollection(reply);
         }
     }
 }
