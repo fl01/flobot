@@ -32,7 +32,7 @@ namespace Flobot.Messages.Handlers.ExternalHandler
         public IEnumerable<ExternalReply> GetReplyMessages(ActivityBundle bundle)
         {
             var client = IoC.Container.Resolve<HttpClient>();
-            string reply = client.PostJson(connectionData.Url, bundle.Message);
+            string reply = client.PostJson(connectionData.Url, bundle);
             return JsonConvert.DeserializeObject<ExternalReply[]>(reply);
         }
 

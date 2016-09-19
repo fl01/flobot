@@ -5,11 +5,13 @@ using System.Web;
 using Flobot.Identity;
 using Flobot.Messages;
 using Microsoft.Bot.Connector;
+using Newtonsoft.Json;
 
 namespace Flobot.Common
 {
     public class ActivityBundle
     {
+        [JsonIgnore]
         public Activity Activity { get; private set; }
 
         public Message Message { get; private set; }
