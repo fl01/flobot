@@ -10,7 +10,7 @@ namespace Flobot.Messages.Handlers
     [Permissions(Role.User)]
     [Message("go lang", Section.Default, "golang", "gl")]
     public class GolangHandler : ExternalHandlerBase
-    {
+    {   
         public GolangHandler(IExternalSource source, ActivityBundle activityBundle)
             : base(source, activityBundle)
         {
