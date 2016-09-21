@@ -32,5 +32,13 @@ namespace Flobot.Settings
         {
             return configSettings.GetSubCommandSeparator();
         }
+
+        public ExternalConnectionDataDTO GetTempEmailConnectionData()
+        {
+            return new ExternalConnectionDataDTO()
+            {
+                Url = new Uri(configSettings.GetTempEmailExternalHandlerHost())
+            };
+        }
     }
 }

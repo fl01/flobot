@@ -31,6 +31,11 @@ namespace Flobot.Settings
             return GetAppKeyValue("GolangExternalHandlerHost");
         }
 
+        public string GetTempEmailExternalHandlerHost()
+        {
+            return GetAppKeyValue("TempEmailExternalHandlerHost");
+        }
+
         private string GetAppKeyValue(string appkey)
         {
             try

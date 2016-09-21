@@ -7,5 +7,7 @@
         string GetSubCommandSeparator();
 
         string GetGolangExternalHandlerHost();
+
+        string GetTempEmailExternalHandlerHost();
     }
 }

@@ -242,6 +242,7 @@
     <Compile Include="Messages\Handlers\PictureStore\StreamExtensions.cs" />
     <Compile Include="Messages\Handlers\PsychoRaid\GoogleDocProxy.cs" />
     <Compile Include="Messages\Handlers\PsychoRaid\RaidMember.cs" />
+    <Compile Include="Messages\Handlers\TempEmailHandler.cs" />
     <Compile Include="Messages\Handlers\VersionHandler.cs" />
     <Compile Include="Messages\IMessageHandlerProvider.cs" />
     <Compile Include="Messages\MessageAttribute.cs" />

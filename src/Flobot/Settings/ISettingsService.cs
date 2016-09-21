@@ -9,5 +9,7 @@ namespace Flobot.Settings
         string GetSubCommandSeparator();
 
         ExternalConnectionDataDTO GetGolangConnectionData();
+
+        ExternalConnectionDataDTO GetTempEmailConnectionData();
     }
 }
