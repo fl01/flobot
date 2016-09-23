@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Flobot.ExternalServiceCore.Communication;
+using Flobot.TemporaryEmailService.Email;
+using Flobot.TemporaryEmailService.Models;
 using Flobot.TemporaryEmailService.Settings;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,11 +13,11 @@ namespace Flobot.TemporaryEmailService.Controllers
     [Route("api/[controller]")]
     public class MainController : Controller
     {
-        private ISettingsService settings;
+        private IEmailService emailService;
 
-        public MainController(ISettingsService settings)
+        public MainController(IEmailService emailService)
         {
-            this.settings = settings;
+            this.emailService = emailService;
         }
 
         [HttpGet]
@@ -28,13 +30,24 @@ namespace Flobot.TemporaryEmailService.Controllers
         [HttpPost]
         public ExternalReply[] Post([FromBody]Request request)
         {
-            var dummyReply = new ExternalReply()
-            {
-                Kind = ReplyType.Text,
-                Text = "ALL HAIL .NET CORE"
-            };
+            // TODO : check command
+            return CreateNewTemporaryEmail(request);
+        }
 
-            return new[] { dummyReply };
+        private ExternalReply[] CreateNewTemporaryEmail(Request request)
+        {
+            TemporaryEmail email = emailService.CreateEmail(request.Caller);
+            string replyText;
+            if (email == null)
+            {
+                replyText = "Failed to create email on remote service. Please try again later";
+            }
+            else
+            {
+                replyText = $"{request.Caller.Name}, new email has been generated at {email.IssueDate}. Email: '{email.Email}', Dispose Time: {emailService.GetEmailDisposeTimeForDisplay()}, AccessLink: {email.AccessLink}";
+            }
+
+            return ExternalReplyFactory.CreateSingleTextReplyCollection(replyText);
         }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Flobot.ExternalServiceCore.Settings;
+using Flobot.TemporaryEmailService.DataSource;
+using Flobot.TemporaryEmailService.Email;
 using Flobot.TemporaryEmailService.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,6 +45,7 @@ namespace Flobot.TemporaryEmailService
 
             services
                 .AddSingleton(Configuration)
+                .AddTransient<IEmailHistoryDataSource, MongoDbEmailHistory>()
                 .AddSingleton<ISettingsService, SettingsService>()
                 .AddSingleton<ConfigSettings>();
         }

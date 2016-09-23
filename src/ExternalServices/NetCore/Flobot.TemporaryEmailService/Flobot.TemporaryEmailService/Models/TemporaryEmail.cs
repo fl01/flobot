@@ -7,17 +7,12 @@ namespace Flobot.TemporaryEmailService.Models
 {
     public class TemporaryEmail
     {
-        public string AccessLink { get; set; }   
+        public string AccessLink { get; set; }
 
-        public string IssuerID { get; set; }
+        public string UserID { get; set; }
 
-        public DateTime ExpiryDate { get; set; }
+        public string Email { get; set; }
 
         public DateTime IssueDate { get; set; }
-
-        public bool IsExpired
-        {
-            get { return DateTime.Now > ExpiryDate; }
-        }
     }
 }
