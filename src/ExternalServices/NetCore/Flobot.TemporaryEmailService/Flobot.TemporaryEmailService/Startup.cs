@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Flobot.ExternalServiceCore.Settings;
+using Flobot.TemporaryEmailService.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +40,11 @@ namespace Flobot.TemporaryEmailService
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddMvc();
+
+            services
+                .AddSingleton(Configuration)
+                .AddSingleton<ISettingsService, SettingsService>()
+                .AddSingleton<ConfigSettings>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
