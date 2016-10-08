@@ -21,10 +21,9 @@ namespace Flobot.TemporaryEmailService.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> Get()
+        public string Get()
         {
-            // TODO : return help
-            return new string[] { "value1", "value2" };
+            return "Hello from .net core";
         }
 
         [HttpPost]
