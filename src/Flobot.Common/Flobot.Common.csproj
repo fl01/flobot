@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +49,9 @@
   <ItemGroup>
     <Compile Include="Algorithms\Levenshtein.cs" />
     <Compile Include="AssemblyExtensions.cs" />
+    <Compile Include="Cache\CacheObject.cs" />
+    <Compile Include="Cache\ICacheStorage.cs" />
+    <Compile Include="Cache\MemoryCacheStorage.cs" />
     <Compile Include="Container\IoC.cs" />
     <Compile Include="DTO\ExternalConnectionDataDTO.cs" />
     <Compile Include="ExternalServices\ExternalReply.cs" />

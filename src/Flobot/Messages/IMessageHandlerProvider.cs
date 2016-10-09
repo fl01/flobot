@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Flobot.Identity;
+﻿using Flobot.Common;
 using Flobot.Messages.Handlers;
 
 namespace Flobot.Messages
 {
     public interface IMessageHandlerProvider
     {
-        IMessageHandler GetHandler();
+        IMessageHandler GetHandler(ActivityBundle activityBundle);
     }
 }

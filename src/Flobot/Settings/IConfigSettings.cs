@@ -1,4 +1,6 @@
-﻿namespace Flobot.Settings
+﻿using System;
+
+namespace Flobot.Settings
 {
     public interface IConfigSettings
     {
@@ -6,8 +8,8 @@
 
         string GetSubCommandSeparator();
 
-        string GetGolangExternalHandlerHost();
-
         string GetTempEmailExternalHandlerHost();
+
+        TimeSpan GetUpdateHandlersFrequency();
     }
 }

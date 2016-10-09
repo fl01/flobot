@@ -197,65 +197,76 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\DataSource\ExternalServicesDataSource.cs" />
+    <Compile Include="Handlers\DataSource\IMetadataDataSource.cs" />
+    <Compile Include="Handlers\DataSource\LocalAssemblyDataSource.cs" />
+    <Compile Include="Handlers\HandlerMetadataService.cs" />
+    <Compile Include="Handlers\Metadata\HandlerMetadataBase.cs" />
+    <Compile Include="Handlers\Metadata\HandlerType.cs" />
+    <Compile Include="Handlers\Metadata\IExternalHandlerMetadata.cs" />
+    <Compile Include="Handlers\Metadata\IHandlerMetadata.cs" />
+    <Compile Include="Handlers\IHandlerMetadataService.cs" />
+    <Compile Include="Handlers\Metadata\ILocalHandlerMetadata.cs" />
+    <Compile Include="Handlers\Metadata\IMetadataConverter.cs" />
+    <Compile Include="Handlers\Metadata\LocalHandlerMetadata.cs" />
+    <Compile Include="Handlers\Metadata\MetadataConverter.cs" />
     <Compile Include="Identity\Group.cs" />
+    <Compile Include="Identity\IPermissionsService.cs" />
     <Compile Include="Identity\IUserManager.cs" />
     <Compile Include="Identity\IUserStore.cs" />
     <Compile Include="Identity\PermissionsAttribute.cs" />
+    <Compile Include="Identity\PermissionsService.cs" />
     <Compile Include="Identity\Role.cs" />
     <Compile Include="Identity\User.cs" />
     <Compile Include="Identity\UserManager.cs" />
     <Compile Include="Identity\UserStore.cs" />
-    <Compile Include="Messages\CommandParseResult.cs" />
+    <Compile Include="Messages\Commands\CommandParseResult.cs" />
     <Compile Include="Messages\Commands\ChatCommandInfo.cs" />
     <Compile Include="Messages\Commands\ICommandInfo.cs" />
-    <Compile Include="Messages\Handlers\AccountHandler.cs" />
-    <Compile Include="Messages\Handlers\CurrencyHandler.cs" />
-    <Compile Include="Messages\Handlers\Currency\CurrencyContainer.cs" />
-    <Compile Include="Messages\Handlers\Currency\CurrencyData.cs" />
-    <Compile Include="Messages\Handlers\Currency\CurrencyValue.cs" />
-    <Compile Include="Messages\Handlers\Currency\ICurrencyProxy.cs" />
-    <Compile Include="Messages\Handlers\Currency\OpenratesProxy.cs" />
-    <Compile Include="Messages\Handlers\DongerHandler.cs" />
-    <Compile Include="Messages\Handlers\AdviceHandler.cs" />
-    <Compile Include="Messages\Handlers\Advice\AdviceProvider.cs" />
-    <Compile Include="Messages\Handlers\Advice\AdviceResponse.cs" />
-    <Compile Include="Messages\Handlers\Donger\DongerFace.cs" />
-    <Compile Include="Messages\Handlers\Donger\DongerStore.cs" />
-    <Compile Include="Messages\Handlers\ExternalHandler\ExternalHandlerBase.cs" />
-    <Compile Include="Messages\Handlers\ExternalHandler\IExternalSource.cs" />
-    <Compile Include="Messages\Handlers\ExternalHandler\RestfulSource.cs" />
-    <Compile Include="Messages\Handlers\FuckHandler.cs" />
-    <Compile Include="Messages\Handlers\Fuck\FoaasProxy.cs" />
-    <Compile Include="Messages\Handlers\Fuck\FoaasResponse.cs" />
-    <Compile Include="Messages\Handlers\GolangHandler.cs" />
-    <Compile Include="Messages\Handlers\HelpHandler.cs" />
-    <Compile Include="Messages\Handlers\IMessageHandler.cs" />
-    <Compile Include="Messages\Handlers\LirikHandler.cs" />
-    <Compile Include="Messages\Handlers\MeHandler.cs" />
-    <Compile Include="Messages\Handlers\PictureStoreHandler.cs" />
-    <Compile Include="Messages\Handlers\PictureStore\ActionResult.cs" />
-    <Compile Include="Messages\Handlers\PictureStore\AddImageResult.cs" />
-    <Compile Include="Messages\Handlers\PictureStore\DeleteImageResult.cs" />
-    <Compile Include="Messages\Handlers\PictureStore\IPictureStore.cs" />
-    <Compile Include="Messages\Handlers\PictureStore\LocalPictureStore.cs" />
-    <Compile Include="Messages\Handlers\PictureStore\PictureStoreStats.cs" />
-    <Compile Include="Messages\Handlers\PictureStore\StreamExtensions.cs" />
-    <Compile Include="Messages\Handlers\PsychoRaid\GoogleDocProxy.cs" />
-    <Compile Include="Messages\Handlers\PsychoRaid\RaidMember.cs" />
-    <Compile Include="Messages\Handlers\TempEmailHandler.cs" />
-    <Compile Include="Messages\Handlers\VersionHandler.cs" />
+    <Compile Include="Messages\LocalHandlers\LirikHandler.cs" />
+    <Compile Include="Messages\LocalHandlers\AccountHandler.cs" />
+    <Compile Include="Messages\LocalHandlers\CurrencyHandler.cs" />
+    <Compile Include="Messages\LocalHandlers\Currency\CurrencyContainer.cs" />
+    <Compile Include="Messages\LocalHandlers\Currency\CurrencyData.cs" />
+    <Compile Include="Messages\LocalHandlers\Currency\CurrencyValue.cs" />
+    <Compile Include="Messages\LocalHandlers\Currency\ICurrencyProxy.cs" />
+    <Compile Include="Messages\LocalHandlers\Currency\OpenratesProxy.cs" />
+    <Compile Include="Messages\LocalHandlers\DongerHandler.cs" />
+    <Compile Include="Messages\LocalHandlers\AdviceHandler.cs" />
+    <Compile Include="Messages\LocalHandlers\Advice\AdviceProvider.cs" />
+    <Compile Include="Messages\LocalHandlers\Advice\AdviceResponse.cs" />
+    <Compile Include="Messages\LocalHandlers\Donger\DongerFace.cs" />
+    <Compile Include="Messages\LocalHandlers\Donger\DongerStore.cs" />
+    <Compile Include="Messages\ExternalHandlers\ExternalHandlerBase.cs" />
+    <Compile Include="Messages\ExternalHandlers\IExternalSource.cs" />
+    <Compile Include="Messages\ExternalHandlers\RestfulSource.cs" />
+    <Compile Include="Messages\LocalHandlers\FuckHandler.cs" />
+    <Compile Include="Messages\LocalHandlers\Fuck\FoaasProxy.cs" />
+    <Compile Include="Messages\LocalHandlers\Fuck\FoaasResponse.cs" />
+    <Compile Include="Messages\LocalHandlers\HelpHandler.cs" />
+    <Compile Include="Messages\IMessageHandler.cs" />
+    <Compile Include="Messages\LocalHandlers\MeHandler.cs" />
+    <Compile Include="Messages\LocalHandlers\PictureStoreHandler.cs" />
+    <Compile Include="Messages\LocalHandlers\PictureStore\ActionResult.cs" />
+    <Compile Include="Messages\LocalHandlers\PictureStore\AddImageResult.cs" />
+    <Compile Include="Messages\LocalHandlers\PictureStore\DeleteImageResult.cs" />
+    <Compile Include="Messages\LocalHandlers\PictureStore\IPictureStore.cs" />
+    <Compile Include="Messages\LocalHandlers\PictureStore\LocalPictureStore.cs" />
+    <Compile Include="Messages\LocalHandlers\PictureStore\PictureStoreStats.cs" />
+    <Compile Include="Messages\LocalHandlers\PictureStore\StreamExtensions.cs" />
+    <Compile Include="Messages\ExternalHandlers\TempEmailHandler.cs" />
+    <Compile Include="Messages\LocalHandlers\VersionHandler.cs" />
     <Compile Include="Messages\IMessageHandlerProvider.cs" />
     <Compile Include="Messages\MessageAttribute.cs" />
-    <Compile Include="Messages\Handlers\MessageHandlerBase.cs" />
+    <Compile Include="Messages\MessageHandlerBase.cs" />
     <Compile Include="Messages\MessageHandlerProvider.cs" />
-    <Compile Include="Messages\Handlers\NonCommandMessageHandler.cs" />
-    <Compile Include="Messages\Handlers\PsychoRaidHandler.cs" />
+    <Compile Include="Messages\LocalHandlers\NonCommandMessageHandler.cs" />
     <Compile Include="Messages\Section.cs" />
     <Compile Include="Messages\TypeLoaderExtensions.cs" />
     <Compile Include="Messages\IMessageParser.cs" />
     <Compile Include="Messages\Message.cs" />
     <Compile Include="Messages\RegexMessageParser.cs" />
-    <Compile Include="Messages\Handlers\UtilityHandler.cs" />
+    <Compile Include="Messages\LocalHandlers\UtilityHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\ConfigSettings.cs" />
     <Compile Include="Settings\IConfigSettings.cs" />
@@ -311,7 +322,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>3979</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44362/</IISUrl>
+          <IISUrl>https://localhost:44362</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

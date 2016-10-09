@@ -67,8 +67,7 @@ namespace Flobot
                 }
             }
 
-            var response = Request.CreateResponse(HttpStatusCode.OK);
-            return response;
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         private IEnumerable<Activity> HandleBotAddedRemovedFromContact(Activity activity)
@@ -90,8 +89,8 @@ namespace Flobot
             Message message = messageParser.Parse(activity.Text);
 
             ActivityBundle bundle = new ActivityBundle(activity, message, user);
-            IMessageHandlerProvider handlerProvider = new MessageHandlerProvider(bundle);
-            IMessageHandler handler = handlerProvider.GetHandler();
+            var handlerProvider = IoC.Container.Resolve<IMessageHandlerProvider>();
+            IMessageHandler handler = handlerProvider.GetHandler(bundle);
 
             List<Activity> replies = new List<Activity>();
 
@@ -110,7 +109,7 @@ namespace Flobot
             }
             else
             {
-                var successReplies = handler.GetReplies();
+                var successReplies = handler.GetReplies(bundle);
                 replies.AddRange(successReplies);
             }
 

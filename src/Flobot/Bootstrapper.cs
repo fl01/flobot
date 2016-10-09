@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Flobot.Common.Net;
+using Flobot.Handlers;
+using Flobot.Handlers.DataSource;
+using Flobot.Handlers.Metadata;
 using Flobot.Identity;
 using Flobot.InversionOfControl;
 using Flobot.Messages;
-using Flobot.Messages.Handlers.Fuck;
-using Flobot.Messages.Handlers.PictureStore;
-using Flobot.Messages.Handlers.PsychoRaid;
-using Flobot.Settings;
 using Flobot.Messages.Handlers.ExternalHandler;
-using Flobot.Common;
-using Flobot.Common.Net;
+using Flobot.Messages.LocalHandlers.Fuck;
+using Flobot.Messages.LocalHandlers.PictureStore;
+using Flobot.Settings;
 
 namespace Flobot
 {
@@ -19,8 +19,14 @@ namespace Flobot
             container
                 .Register<IConfigSettings, ConfigSettings>(Lifetime.Singleton)
                 .Register<ISettingsService, SettingsService>(Lifetime.Singleton)
+                .Register<IMessageHandlerProvider, MessageHandlerProvider>(Lifetime.Singleton)
+                .Register<IHandlerMetadataService, HandlerMetadataService>(Lifetime.Singleton)
+                .Register<IMetadataConverter, MetadataConverter>(Lifetime.PerResolve)
+                .Register<IPermissionsService, PermissionsService>(Lifetime.PerResolve)
+                // TODO : should we use empty interfaces instead of nameof ? e.g. ILocalAssemblyDataSource : IMetadataDataSource 
+                .Register<IMetadataDataSource, ExternalServicesDataSource>(nameof(ExternalServicesDataSource), Lifetime.PerResolve)
+                .Register<IMetadataDataSource, LocalAssemblyDataSource>(nameof(LocalAssemblyDataSource), Lifetime.PerResolve)
                 .Register<FoaasProxy>(Lifetime.PerResolve)
-                .Register<GoogleDocProxy>(Lifetime.PerResolve)
                 .Register<IMessageParser, RegexMessageParser>(Lifetime.PerResolve)
                 .Register<IUserStore, UserStore>(Lifetime.PerResolve)
                 .Register<IUserManager, UserManager>(Lifetime.PerResolve)

@@ -20,14 +20,6 @@ namespace Flobot.Settings
             return configSettings.GetCommandPrefix();
         }
 
-        public ExternalConnectionDataDTO GetGolangConnectionData()
-        {
-            return new ExternalConnectionDataDTO()
-            {
-                Url = new Uri(configSettings.GetGolangExternalHandlerHost())
-            };
-        }
-
         public string GetSubCommandSeparator()
         {
             return configSettings.GetSubCommandSeparator();
@@ -39,6 +31,11 @@ namespace Flobot.Settings
             {
                 Url = new Uri(configSettings.GetTempEmailExternalHandlerHost())
             };
+        }
+
+        public TimeSpan GetUpdateHandlersFrequency()
+        {
+            return configSettings.GetUpdateHandlersFrequency();
         }
     }
 }

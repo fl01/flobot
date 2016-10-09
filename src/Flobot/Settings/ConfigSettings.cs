@@ -26,14 +26,23 @@ namespace Flobot.Settings
             return GetAppKeyValue("SubCommandSeparator");
         }
 
-        public string GetGolangExternalHandlerHost()
-        {
-            return GetAppKeyValue("GolangExternalHandlerHost");
-        }
-
         public string GetTempEmailExternalHandlerHost()
         {
             return GetAppKeyValue("TempEmailExternalHandlerHost");
+        }
+
+        public TimeSpan GetUpdateHandlersFrequency()
+        {
+            string rawFrequency = GetAppKeyValue("UpdateHandlersFrequency");
+
+            TimeSpan updateFrequency;
+            if (!TimeSpan.TryParse(rawFrequency, out updateFrequency))
+            {
+                logger.Warn("Update frequency for handlers is not set. 1 minute will be used instead.");
+                updateFrequency = TimeSpan.FromMinutes(1);
+            }
+
+            return updateFrequency;
         }
 
         private string GetAppKeyValue(string appkey)
@@ -48,5 +57,6 @@ namespace Flobot.Settings
                 return string.Empty;
             }
         }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Flobot.Common.DTO;
+﻿using System;
+using Flobot.Common.DTO;
 
 namespace Flobot.Settings
 {
@@ -8,8 +9,8 @@ namespace Flobot.Settings
 
         string GetSubCommandSeparator();
 
-        ExternalConnectionDataDTO GetGolangConnectionData();
-
         ExternalConnectionDataDTO GetTempEmailConnectionData();
+
+        TimeSpan GetUpdateHandlersFrequency();
     }
 }

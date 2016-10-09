@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Flobot.Common;
-using Flobot.Identity;
-using Microsoft.Bot.Connector;
+﻿using Flobot.Identity;
 
 namespace Flobot.Messages.Commands
 {
@@ -21,11 +15,6 @@ namespace Flobot.Messages.Commands
             Name = name;
             Group = group;
             Role = role;
-        }
-
-        public bool CanExecute(ActivityBundle bundle)
-        {
-            return Role <= bundle.Caller.Role && bundle.Caller.Group.HasFlag(Group) || bundle.Caller.Group.HasFlag(Group.Administrators) || bundle.Caller.Role == Role.Admin;
         }
     }
 }
