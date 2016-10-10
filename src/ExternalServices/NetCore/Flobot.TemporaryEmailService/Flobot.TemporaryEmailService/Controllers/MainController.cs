@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Flobot.ExternalServiceCore.Communication;
+﻿using Flobot.ExternalServiceCore.Communication;
 using Flobot.TemporaryEmailService.Email;
 using Flobot.TemporaryEmailService.Models;
-using Flobot.TemporaryEmailService.Settings;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Flobot.TemporaryEmailService.Controllers
