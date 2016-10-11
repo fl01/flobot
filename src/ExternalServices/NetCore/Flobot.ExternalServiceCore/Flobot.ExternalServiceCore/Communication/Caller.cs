@@ -1,4 +1,5 @@
 ﻿using Flobot.ExternalServiceCore.Identity;
+using Newtonsoft.Json;
 
 namespace Flobot.ExternalServiceCore.Communication
 {

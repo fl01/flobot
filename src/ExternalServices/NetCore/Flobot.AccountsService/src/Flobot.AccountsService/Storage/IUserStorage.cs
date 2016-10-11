@@ -7,12 +7,12 @@ namespace Flobot.AccountsService.Storage
     {
         IEnumerable<Caller> GetUsers();
 
-        Caller GetUser();
+        Caller GetUser(string id);
 
-        void AddUser(Caller user);
+        StorageActionResult AddUser(Caller user);
 
-        void DeleteUser();
+        StorageActionResult DeleteUser(string id);
 
-        void UpdateUser(Caller user);
+        StorageActionResult UpdateUser(Caller user);
     }
 }

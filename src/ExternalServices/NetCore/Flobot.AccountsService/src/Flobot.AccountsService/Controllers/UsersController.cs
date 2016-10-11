@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Net;
 using Flobot.AccountsService.Storage;
+using Flobot.ExternalServiceCore.Communication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Flobot.AccountsService.Controllers
@@ -19,34 +18,54 @@ namespace Flobot.AccountsService.Controllers
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Caller> Get()
         {
-            return new string[] { "value1", "value2" };
+            return userStorage
+                .GetUsers();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Caller Get(string id)
         {
-            return "value";
+            return userStorage.GetUser(id);
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody]Caller user)
         {
+            StorageActionResult result = userStorage.AddUser(user);
+
+            return GetResponse(result, HttpStatusCode.Created);
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPut]
+        public IActionResult Put([FromBody]Caller user)
         {
+            StorageActionResult result = userStorage.UpdateUser(user);
+
+            return GetResponse(result, HttpStatusCode.OK);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(string id)
         {
+            StorageActionResult result = userStorage.DeleteUser(id);
+
+            return GetResponse(result, HttpStatusCode.OK);
+        }
+
+        private IActionResult GetResponse(StorageActionResult storageResult, HttpStatusCode success)
+        {
+            if (storageResult.Result == ResultType.Fail)
+            {
+                return new BadRequestObjectResult(storageResult.Errors);
+            }
+
+            return new StatusCodeResult((int)success);
         }
     }
 }

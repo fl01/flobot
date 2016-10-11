@@ -1,4 +1,5 @@
-﻿using Flobot.AccountsService.Storage;
+﻿using Flobot.AccountsService.Settings;
+using Flobot.AccountsService.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +27,12 @@ namespace Flobot.AccountsService
         {
             // Add framework services.
             services.AddMvc();
-            services.AddTransient<IUserStorage, MongoDbStorage>();
+
+            services
+                .AddSingleton(Configuration)
+                .AddTransient<IUserStorage, MongoDbStorage>()
+                .AddSingleton<ISettingsService, SettingsService>()
+                .AddSingleton<ConfigSettings>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
