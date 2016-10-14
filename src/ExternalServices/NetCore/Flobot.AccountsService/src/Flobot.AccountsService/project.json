@@ -49,7 +49,7 @@
       "wwwroot",
       "**/*.cshtml",
       "appsettings.json",
-      "web.config"
+      "serverUrls.json"
     ]
   },
 
