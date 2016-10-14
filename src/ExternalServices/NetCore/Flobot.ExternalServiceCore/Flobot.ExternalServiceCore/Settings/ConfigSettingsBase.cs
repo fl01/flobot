@@ -20,5 +20,10 @@ namespace Flobot.ExternalServiceCore.Settings
         {
             root[key] = value;
         }
+
+        public string GetDataSourceKeyValue(string key)
+        {
+            return root.GetSection("DataSource")?[key] ?? string.Empty;
+        }
     }
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Flobot.ExternalServiceLocator.Settings;
+using Flobot.ExternalServiceLocator.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +27,12 @@ namespace Flobot.ExternalServiceLocator
         {
             // Add framework services.
             services.AddMvc();
+
+            services
+                .AddSingleton(Configuration)
+                .AddTransient<IServicesStorage, MongoDbStorage>()
+                .AddSingleton<ISettingsService, SettingsService>()
+                .AddSingleton<ConfigSettings>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

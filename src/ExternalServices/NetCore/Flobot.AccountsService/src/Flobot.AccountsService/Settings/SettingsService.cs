@@ -14,12 +14,12 @@ namespace Flobot.AccountsService.Settings
 
         public string GetConnectionString()
         {
-            return config.GetKeyValue("DataSource:MongoDbConnectionString");
+            return config.GetDataSourceKeyValue("MongoDbConnectionString");
         }
 
         public string GetDbName()
         {
-            return config.GetKeyValue("DataSource:DbName");
+            return config.GetDataSourceKeyValue("DbName");
         }
     }
 }

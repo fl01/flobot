@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Flobot.ExternalServiceLocator.Storage;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Flobot.ExternalServiceLocator.Controllers
@@ -9,6 +7,13 @@ namespace Flobot.ExternalServiceLocator.Controllers
     [Route("api/[controller]")]
     public class ServicesController : Controller
     {
+        private IServicesStorage servicesStorage;
+
+        public ServicesController(IServicesStorage servicesStorage)
+        {
+            this.servicesStorage = servicesStorage;
+        }
+
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
