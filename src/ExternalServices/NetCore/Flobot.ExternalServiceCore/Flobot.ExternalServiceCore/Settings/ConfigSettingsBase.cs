@@ -6,6 +6,11 @@ namespace Flobot.ExternalServiceCore.Settings
     {
         private IConfigurationRoot root;
 
+        public ConfigSettingsBase(IConfigurationRoot root)
+        {
+            this.root = root;
+        }
+
         public string GetKeyValue(string key)
         {
             return root[key];
@@ -14,11 +19,6 @@ namespace Flobot.ExternalServiceCore.Settings
         public void SetKeyValue(string key, string value)
         {
             root[key] = value;
-        }
-
-        public ConfigSettingsBase(IConfigurationRoot root)
-        {
-            this.root = root;
         }
     }
 }
