@@ -2,31 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using Flobot.AccountsService.Settings;
-using MongoDB.Driver;
 using Flobot.ExternalServiceCore.Communication;
-using MongoDB.Bson;
-using Flobot.ExternalServiceCore.Identity;
+using Flobot.ExternalServiceCore.Storage;
+using MongoDB.Driver;
 
 namespace Flobot.AccountsService.Storage
 {
-    public class MongoDbStorage : IUserStorage
+    public class MongoDbStorage : MongoDbStorageBase, IUserStorage
     {
         private const string UserCollectionName = "{473D4464-E9EB-4688-AD29-C62DA0CB3487}";
 
-        private IMongoClient client;
-        private IMongoDatabase database;
         private ISettingsService settingsService;
 
         private IMongoCollection<Caller> UserCollection
         {
-            get { return database.GetCollection<Caller>(UserCollectionName); }
+            get { return MongoDb.GetCollection<Caller>(UserCollectionName); }
         }
 
         public MongoDbStorage(ISettingsService settingsService)
+            : base(settingsService.GetConnectionString(), settingsService.GetDbName())
         {
             this.settingsService = settingsService;
-            client = new MongoClient(settingsService.GetConnectionString());
-            database = client.GetDatabase(settingsService.GetDbName());
         }
 
         public StorageActionResult AddUser(Caller user)
