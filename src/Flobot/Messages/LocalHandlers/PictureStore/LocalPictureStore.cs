@@ -181,7 +181,7 @@ namespace Flobot.Messages.LocalHandlers.PictureStore
                 using (var tempFolder = new TempFolder())
                 {
                     string expectedFile = Path.Combine(tempFolder.FolderPath, Guid.NewGuid().ToString("D"));
-
+                    logger.Debug("Expected file to download " + expectedFile);
                     using (WebClient wc = new WebClient())
                     {
                         wc.DownloadFile(imageUrl, expectedFile);
@@ -194,6 +194,7 @@ namespace Flobot.Messages.LocalHandlers.PictureStore
                     }
 
                     string savedImagePath = Path.Combine(ImageFolderPath, imageName + "." + ImageExtension);
+                    logger.Debug("save image path " + savedImagePath);
 
                     // this should never occur
                     // TODO : thread safe file manager

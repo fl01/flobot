@@ -56,6 +56,10 @@ namespace Flobot.Messages.LocalHandlers
                 return CreateSingleReplyCollection(activityBundle, $"Picture '{pictureName}' not found");
             }
 
+            Logger.Debug("RequestedImage FullName " + requestedImage.FullName);
+            Logger.Debug("RequestedImage PhysicalPath " + requestedImage.PhysicalPath);
+            Logger.Debug("RequestedImage WebPath " + requestedImage.WebPath);
+
             string cardText = GetRequestedPictureText(activityBundle.Message.CommandArg);
             ThumbnailCard card = CreateThumbnailCard(cardText);
             CardImage image = CreateCardImage(requestedImage);
